@@ -78,3 +78,4 @@ cafe/
 
 ## 📄 License
 Private repository for Beans & Bites Cafe & Restaurant.
+

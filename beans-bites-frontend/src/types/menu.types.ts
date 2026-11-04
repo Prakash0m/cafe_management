@@ -6,7 +6,8 @@ export interface FoodItem {
   price: number;
   category: string;
   imageUrl: string;
-  badge?: "Best Seller" | "Popular" | "Chef Special" | "New";
+  badge?: "Bestseller" | "Best Seller" | "Popular" | "Chef Special" | "New";
+  isVeg?: boolean;
   isAvailable: boolean;
   preparationTime?: string;
   calories?: number;

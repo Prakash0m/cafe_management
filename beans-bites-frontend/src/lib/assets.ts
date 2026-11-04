@@ -26,6 +26,21 @@ export const ASSETS = {
     pasta: {
       alfredo: "/assets/food/pasta/pasta-alfredo.webp",
     },
+    sandwich: {
+      veg: "/assets/food/sandwich/veg-sandwich.webp",
+    },
+    salad: {
+      caesar: "/assets/food/salad/caesar-salad.webp",
+    },
+    desserts: {
+      brownie: "/assets/food/desserts/chocolate-brownie.webp",
+    },
+    beverages: {
+      icedLatte: "/assets/food/beverages/iced-latte.webp",
+    },
+  },
+  menu: {
+    bannerPizza: "/assets/menu/menu-banner-pizza.webp",
   },
   categories: {
     all: "/assets/categories/all.webp",
