@@ -1,0 +1,12 @@
+{
+  "name": "beans-bites-cafe-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix beans-bites-frontend run dev",
+    "build": "npm --prefix beans-bites-frontend run build",
+    "start": "npm --prefix beans-bites-frontend run start",
+    "lint": "npm --prefix beans-bites-frontend run lint"
+  }
+}
+
