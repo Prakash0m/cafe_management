@@ -11,6 +11,7 @@ export const ASSETS = {
       "/assets/hero/hero-slide-2.webp",
       "/assets/hero/hero-slide-3.webp",
       "/assets/hero/hero-slide-4.webp",
+      "/assets/hero/hero-slide-5.webp",
     ],
   },
   food: {

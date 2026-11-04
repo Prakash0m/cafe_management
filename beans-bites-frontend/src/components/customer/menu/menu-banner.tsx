@@ -6,7 +6,7 @@ import { ASSETS } from "@/lib/assets";
 
 export function MenuBanner() {
   return (
-    <section className="relative w-full bg-[#18110D] overflow-hidden border-b border-gray-900/40">
+    <section className="relative w-full bg-[#27160F] overflow-hidden border-b border-gray-900/40">
       {/* Background radial gradient glow for warm cafe ambience */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(255,90,10,0.12),transparent_70%)] pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_40%,rgba(255,140,50,0.08),transparent_60%)] pointer-events-none" />
@@ -105,3 +105,4 @@ export function MenuBanner() {
     </section>
   );
 }
+

@@ -111,3 +111,4 @@ async function processMenuAssets() {
 }
 
 processMenuAssets().catch(console.error);
+

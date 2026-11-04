@@ -49,3 +49,4 @@ export function DietaryIndicator({
     </span>
   );
 }
+

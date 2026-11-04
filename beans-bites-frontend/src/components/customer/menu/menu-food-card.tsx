@@ -195,3 +195,4 @@ export function MenuFoodCard({ item, className }: MenuFoodCardProps) {
     </article>
   );
 }
+

@@ -68,6 +68,18 @@ const HERO_SLIDES: HeroSlide[] = [
     secondaryButtonText: "View Beverages",
     secondaryButtonHref: "/menu?category=beverages",
   },
+  {
+    id: "slide-5",
+    image: ASSETS.hero.slides[4],
+    badge: "OUR SPECIAL SELECTION • CHEF PICKS",
+    headingLine1: "Our Food",
+    headingLine2: "Menu",
+    description:
+      "Explore a wide variety of delicious food, refreshing beverages and delightful desserts.",
+    primaryButtonText: "Explore Menu",
+    secondaryButtonText: "Order Now",
+    secondaryButtonHref: "/menu",
+  },
 ];
 
 export function HeroSection() {
@@ -183,7 +195,7 @@ export function HeroSection() {
         <div className="pt-6 sm:pt-4 pb-2 border-t border-white/10 mt-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <HeroBenefits />
 
-          {/* Carousel Pagination Dots (Exactly 4 Dots) */}
+          {/* Carousel Pagination Dots */}
           <div className="flex items-center gap-2 z-20 self-center sm:self-auto">
             {HERO_SLIDES.map((slide, idx) => (
               <button
