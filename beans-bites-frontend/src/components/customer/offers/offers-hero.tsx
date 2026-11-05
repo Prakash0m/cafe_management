@@ -2,16 +2,13 @@
 
 import * as React from "react";
 import Image from "next/image";
-import Link from "next/link";
 import {
   ArrowRight,
   ChevronLeft,
   ChevronRight,
-  Clock,
   Sparkles,
   TicketPercent,
   Check,
-  CheckCircle2,
   Percent,
   ShieldCheck,
   Utensils,
@@ -19,6 +16,7 @@ import {
 import { ASSETS } from "@/lib/assets";
 import { useCartStore } from "@/store/cart.store";
 import { toast } from "sonner";
+import { DealCountdown } from "./deal-countdown";
 
 interface OfferSlide {
   id: string;
@@ -113,30 +111,6 @@ export function OffersHero() {
   const [isPaused, setIsPaused] = React.useState(false);
   const { applyCoupon, appliedCoupon } = useCartStore();
 
-  // Live countdown timer for the flash deal
-  const [timeLeft, setTimeLeft] = React.useState({
-    hours: 7,
-    minutes: 41,
-    seconds: 49,
-  });
-
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev.seconds > 0) {
-          return { ...prev, seconds: prev.seconds - 1 };
-        } else if (prev.minutes > 0) {
-          return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
-        } else if (prev.hours > 0) {
-          return { hours: prev.hours - 1, minutes: 59, seconds: 59 };
-        }
-        return prev;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
   // Auto-play carousel every 5 seconds (paused when user hovers)
   React.useEffect(() => {
     if (isPaused) return;
@@ -190,8 +164,6 @@ export function OffersHero() {
   const active = OFFER_SLIDES[currentSlide];
   const isApplied = appliedCoupon?.code === active.couponCode;
 
-  const formatDigit = (num: number) => String(num).padStart(2, "0");
-
   return (
     <section
       className="relative w-full min-h-[380px] sm:min-h-[400px] lg:h-[420px] bg-[#1E110A] overflow-hidden flex items-center select-none"
@@ -226,30 +198,17 @@ export function OffersHero() {
       })}
 
       {/* Offers Content Container - Exact same height & responsive constraints as home */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8 sm:py-10 flex flex-col justify-between h-full min-h-[380px] sm:min-h-[400px] lg:h-[420px]">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-6 sm:py-8 flex flex-col justify-between h-full min-h-[380px] sm:min-h-[400px] lg:h-[420px]">
         {/* Dynamic Text Content with smooth transition */}
-        <div className="max-w-xl space-y-2.5 sm:space-y-3 pt-1 sm:pt-2 transition-all duration-500">
-          {/* Small orange uppercase badge + Countdown Timer pill */}
-          <div className="flex flex-wrap items-center gap-2">
-            <div className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-bold tracking-[0.18em] text-[#FF7A24] uppercase">
-              <Sparkles className="w-3.5 h-3.5 text-[#FF7A24]" />
-              <span>{active.badge}</span>
-            </div>
-
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-black/50 border border-white/15 text-[10px] sm:text-[11px] text-white/90 font-mono backdrop-blur-sm">
-              <Clock className="w-3 h-3 text-[#FF7A24]" />
-              <span>
-                Deal Ends:{" "}
-                <strong className="text-white">
-                  {formatDigit(timeLeft.hours)}h {formatDigit(timeLeft.minutes)}m{" "}
-                  {formatDigit(timeLeft.seconds)}s
-                </strong>
-              </span>
-            </div>
+        <div className="max-w-xl space-y-2 sm:space-y-2.5 pt-1 sm:pt-2 transition-all duration-500">
+          {/* Small orange uppercase badge */}
+          <div className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-bold tracking-[0.18em] text-[#FF7A24] uppercase">
+            <Sparkles className="w-3.5 h-3.5 text-[#FF7A24]" />
+            <span>{active.badge}</span>
           </div>
 
           {/* Main Heading */}
-          <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold tracking-tight leading-[1.12] text-white">
+          <h1 className="text-3xl sm:text-4xl lg:text-[42px] font-extrabold tracking-tight leading-[1.12] text-white">
             {active.headingLine1} <br />
             <span className="text-[#FF5A0A]">{active.headingLine2}</span>
           </h1>
@@ -258,6 +217,15 @@ export function OffersHero() {
           <p className="text-xs sm:text-sm text-gray-200/90 leading-relaxed max-w-md font-normal line-clamp-2">
             {active.description}
           </p>
+
+          {/* Prominent Live Deal Ends Countdown Widget */}
+          <div className="pt-0.5">
+            <DealCountdown
+              variant="hero"
+              dealTitle={`${active.headingLine1} ${active.headingLine2}`}
+              couponCode={active.couponCode}
+            />
+          </div>
 
           {/* CTA Buttons Row */}
           <div className="flex items-center gap-3 sm:gap-4 pt-1">
@@ -289,7 +257,7 @@ export function OffersHero() {
         </div>
 
         {/* Bottom Bar: Offer Guarantees + Carousel 5-Dots */}
-        <div className="pt-4 sm:pt-3 pb-1 border-t border-white/10 mt-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="pt-3 pb-1 border-t border-white/10 mt-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           {/* Guarantees / Perks */}
           <div className="w-full sm:w-auto flex items-center justify-start flex-wrap gap-x-5 sm:gap-x-7 gap-y-1.5 text-white/95">
             {OFFER_PERKS.map((p) => {

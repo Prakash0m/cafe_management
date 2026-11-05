@@ -18,6 +18,7 @@ import { OfferDeal } from "@/types/offers.types";
 import { useCartStore } from "@/store/cart.store";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { DealCountdown } from "./deal-countdown";
 
 interface OfferCardProps {
   offer: OfferDeal;
@@ -150,10 +151,14 @@ export function OfferCard({ offer }: OfferCardProps) {
 
           {/* Validity & Applicability row */}
           <div className="mt-3 flex flex-wrap items-center gap-2 text-[11px] text-gray-500 font-medium">
-            <span className="inline-flex items-center gap-1 bg-orange-50 text-[#FF5A0A] px-2 py-0.5 rounded-md font-semibold">
-              <Clock className="w-3 h-3" />
-              <span>{offer.validity}</span>
-            </span>
+            {(offer.category === "weekend" || offer.badgeType === "hot" || offer.badgeType === "limited") ? (
+              <DealCountdown variant="card" couponCode={offer.couponCode} />
+            ) : (
+              <span className="inline-flex items-center gap-1 bg-orange-50 text-[#FF5A0A] px-2 py-0.5 rounded-md font-semibold">
+                <Clock className="w-3 h-3" />
+                <span>{offer.validity}</span>
+              </span>
+            )}
             <span className="inline-flex items-center gap-1 bg-gray-100 text-gray-700 px-2 py-0.5 rounded-md">
               <Tag className="w-3 h-3 text-gray-400" />
               <span>{offer.applicableItemsText}</span>
