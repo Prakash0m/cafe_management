@@ -8,12 +8,32 @@ const VALID_COUPONS: Record<string, CouponInfo> = {
   WEEKEND20: {
     code: "WEEKEND20",
     discountPercentage: 20,
-    description: "Coupon applied! 20% off on food items.",
+    description: "Coupon applied! 20% off on all Pizzas & Burgers.",
   },
   WELCOME10: {
     code: "WELCOME10",
     discountPercentage: 10,
-    description: "Coupon applied! 10% welcome discount.",
+    description: "Coupon applied! 10% welcome discount for new customers.",
+  },
+  STUDENT15: {
+    code: "STUDENT15",
+    discountPercentage: 15,
+    description: "Coupon applied! 15% student afternoon fuel discount.",
+  },
+  HAPPYHOUR: {
+    code: "HAPPYHOUR",
+    discountPercentage: 30,
+    description: "Coupon applied! 30% Happy Hour discount on Beverages & Desserts.",
+  },
+  MOMO25: {
+    code: "MOMO25",
+    discountPercentage: 25,
+    description: "Coupon applied! 25% Momo Platter combo discount.",
+  },
+  FAMILY30: {
+    code: "FAMILY30",
+    discountPercentage: 30,
+    description: "Coupon applied! 30% Grand Family Feast discount.",
   },
 };
 
@@ -177,7 +197,7 @@ export const useCartStore = create<CartState>()(
 
         return {
           success: false,
-          message: "Invalid coupon code. Please try WEEKEND20 or WELCOME10.",
+          message: "Invalid coupon code. Try WEEKEND20, WELCOME10, HAPPYHOUR, or MOMO25.",
         };
       },
 

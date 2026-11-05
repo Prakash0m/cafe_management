@@ -128,3 +128,4 @@ export function CartItemRow({ cartItem }: CartItemRowProps) {
     </div>
   );
 }
+
