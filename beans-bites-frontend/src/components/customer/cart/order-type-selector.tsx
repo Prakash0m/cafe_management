@@ -37,7 +37,7 @@ export function OrderTypeSelector() {
         Order Type
       </h3>
 
-      <div className="grid grid-cols-3 gap-2.5 sm:gap-3">
+      <div className="grid grid-cols-3 gap-2 sm:gap-3">
         {options.map((opt) => {
           const isSelected = orderType === opt.type;
 
@@ -47,7 +47,7 @@ export function OrderTypeSelector() {
               type="button"
               onClick={() => setOrderType(opt.type)}
               className={cn(
-                "flex flex-col items-center justify-center p-3 sm:p-3.5 rounded-2xl border transition-all duration-150 select-none text-center gap-2",
+                "flex flex-col items-center justify-center p-2.5 sm:p-3.5 rounded-xl sm:rounded-2xl border transition-all duration-150 select-none text-center gap-1.5 sm:gap-2",
                 isSelected
                   ? "border-[#FF5A0A] bg-[#FFF8F3] text-[#FF5A0A] shadow-sm ring-1 ring-[#FF5A0A]/30"
                   : "border-gray-200 bg-white text-gray-600 hover:border-gray-300 hover:bg-gray-50/50"
@@ -55,27 +55,27 @@ export function OrderTypeSelector() {
             >
               <div
                 className={cn(
-                  "p-1.5 rounded-xl transition-colors",
+                  "p-1 sm:p-1.5 rounded-xl transition-colors",
                   isSelected ? "text-[#FF5A0A]" : "text-gray-500"
                 )}
               >
                 {opt.icon}
               </div>
 
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1 sm:gap-1.5">
                 <span
                   className={cn(
-                    "w-3.5 h-3.5 rounded-full border flex items-center justify-center flex-shrink-0 transition-colors",
+                    "w-3 sm:w-3.5 h-3 sm:h-3.5 rounded-full border flex items-center justify-center flex-shrink-0 transition-colors",
                     isSelected
                       ? "border-[#FF5A0A] bg-white"
                       : "border-gray-300 bg-transparent"
                   )}
                 >
                   {isSelected && (
-                    <span className="w-2 h-2 rounded-full bg-[#FF5A0A]" />
+                    <span className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-[#FF5A0A]" />
                   )}
                 </span>
-                <span className="font-bold text-xs sm:text-sm">{opt.label}</span>
+                <span className="font-bold text-[11px] sm:text-sm">{opt.label}</span>
               </div>
             </button>
           );

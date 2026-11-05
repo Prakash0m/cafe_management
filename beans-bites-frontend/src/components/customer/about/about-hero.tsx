@@ -42,7 +42,7 @@ export function AboutHero() {
           </div>
 
           {/* Main Heading */}
-          <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold tracking-tight leading-[1.12] text-white">
+          <h1 className="text-2xl sm:text-4xl lg:text-[44px] font-extrabold tracking-tight leading-[1.12] text-white">
             Crafting Memories, <br />
             <span className="text-[#FF5A0A]">One Brew & Bite at a Time</span>
           </h1>
@@ -54,10 +54,10 @@ export function AboutHero() {
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex items-center gap-3 sm:gap-4 pt-1 sm:pt-2">
+          <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 sm:gap-4 pt-1 sm:pt-2">
             <Link
               href="/menu"
-              className="inline-flex items-center gap-2 bg-[#FF5A0A] hover:bg-[#E04E07] active:bg-[#C94304] text-white text-xs sm:text-sm font-semibold px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl transition-all shadow-md active:scale-95 group"
+              className="inline-flex items-center gap-2 bg-[#FF5A0A] hover:bg-[#E04E07] active:bg-[#C94304] text-white text-xs sm:text-sm font-semibold px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl transition-all shadow-md active:scale-95 group"
             >
               <span>Explore Our Menu</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -65,7 +65,7 @@ export function AboutHero() {
 
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center border border-white/60 bg-black/20 hover:bg-white/10 active:bg-white/20 text-white text-xs sm:text-sm font-medium px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl backdrop-blur-sm transition-all"
+              className="inline-flex items-center justify-center border border-white/60 bg-black/20 hover:bg-white/10 active:bg-white/20 text-white text-xs sm:text-sm font-medium px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl backdrop-blur-sm transition-all"
             >
               <span>Visit Us</span>
             </Link>

@@ -11,31 +11,31 @@ export function AboutGallery() {
       src: ASSETS.hero.slides[1],
       title: "Wood-Fired Pizza Craft",
       category: "Stone Oven Baking",
-      span: "col-span-1 md:col-span-2 row-span-2",
+      span: "col-span-2 md:col-span-2 md:row-span-2 min-h-[240px] sm:min-h-[300px]",
     },
     {
       src: ASSETS.food.beverages.icedLatte,
       title: "Handcrafted Iced Latte",
       category: "Specialty Roasts",
-      span: "col-span-1",
+      span: "col-span-1 min-h-[170px] sm:min-h-[200px]",
     },
     {
       src: ASSETS.food.burger.chicken,
       title: "Flame-Grilled Burgers",
       category: "House Brioche Buns",
-      span: "col-span-1",
+      span: "col-span-1 min-h-[170px] sm:min-h-[200px]",
     },
     {
       src: ASSETS.food.momo.chicken,
       title: "Handmade Himalayan Mo:Mo",
       category: "Roasted Tomato Dip",
-      span: "col-span-1",
+      span: "col-span-1 min-h-[170px] sm:min-h-[200px]",
     },
     {
       src: ASSETS.food.desserts.brownie,
       title: "Decadent Warm Brownie",
       category: "Bakery & Desserts",
-      span: "col-span-1",
+      span: "col-span-1 min-h-[170px] sm:min-h-[200px]",
     },
   ];
 
@@ -58,28 +58,28 @@ export function AboutGallery() {
           </div>
         </div>
 
-        {/* Gallery Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 sm:gap-5">
+        {/* Gallery Grid: 2 columns on mobile, 4 columns on desktop */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-5">
           {images.map((item, idx) => (
             <div
               key={idx}
-              className={`relative overflow-hidden rounded-3xl min-h-[220px] sm:min-h-[240px] group shadow-sm hover:shadow-xl transition-all duration-300 ${item.span}`}
+              className={`relative overflow-hidden rounded-2xl sm:rounded-3xl group shadow-sm hover:shadow-xl transition-all duration-300 ${item.span}`}
             >
               <Image
                 src={item.src}
                 alt={item.title}
                 fill
-                sizes="(max-width: 768px) 100vw, 50vw"
+                sizes="(max-width: 768px) 50vw, 33vw"
                 className="object-cover group-hover:scale-105 transition-transform duration-500 brightness-[0.95]"
               />
               {/* Overlay with details */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
 
-              <div className="absolute bottom-4 left-4 right-4 text-white z-10">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-orange-300 block mb-0.5">
+              <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4 text-white z-10">
+                <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider text-orange-300 block mb-0.5">
                   {item.category}
                 </span>
-                <h3 className="text-sm sm:text-base font-bold text-white leading-tight">
+                <h3 className="text-xs sm:text-base font-bold text-white leading-tight line-clamp-1">
                   {item.title}
                 </h3>
               </div>

@@ -162,7 +162,7 @@ export function HeroSection() {
           </div>
 
           {/* Main Heading */}
-          <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold tracking-tight leading-[1.12] text-white">
+          <h1 className="text-2xl sm:text-4xl lg:text-[44px] font-extrabold tracking-tight leading-[1.12] text-white">
             {active.headingLine1} <br />
             <span className="text-[#FF5A0A]">{active.headingLine2}</span>
           </h1>
@@ -173,10 +173,10 @@ export function HeroSection() {
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex items-center gap-3 sm:gap-4 pt-1 sm:pt-2">
+          <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 sm:gap-4 pt-1 sm:pt-2">
             <button
               onClick={handleScrollToPopular}
-              className="inline-flex items-center gap-2 bg-[#FF5A0A] hover:bg-[#E04E07] active:bg-[#C94304] text-white text-xs sm:text-sm font-semibold px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl transition-all shadow-md active:scale-95 group cursor-pointer"
+              className="inline-flex items-center gap-2 bg-[#FF5A0A] hover:bg-[#E04E07] active:bg-[#C94304] text-white text-xs sm:text-sm font-semibold px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl transition-all shadow-md active:scale-95 group cursor-pointer"
             >
               <span>{active.primaryButtonText}</span>
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -184,7 +184,7 @@ export function HeroSection() {
 
             <Link
               href={active.secondaryButtonHref}
-              className="inline-flex items-center justify-center border border-white/60 bg-black/20 hover:bg-white/10 active:bg-white/20 text-white text-xs sm:text-sm font-medium px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl backdrop-blur-sm transition-all"
+              className="inline-flex items-center justify-center border border-white/60 bg-black/20 hover:bg-white/10 active:bg-white/20 text-white text-xs sm:text-sm font-medium px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl backdrop-blur-sm transition-all"
             >
               {active.secondaryButtonText}
             </Link>
@@ -213,11 +213,11 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Prev / Next Navigation Arrows */}
+      {/* Prev / Next Navigation Arrows - Hidden on small mobile to maximize screen readability */}
       <button
         onClick={handlePrev}
         aria-label="Previous slide"
-        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/30 hover:bg-black/60 text-white/80 hover:text-white backdrop-blur-sm flex items-center justify-center transition-all opacity-70 hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer"
+        className="hidden sm:flex absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/30 hover:bg-black/60 text-white/80 hover:text-white backdrop-blur-sm items-center justify-center transition-all opacity-70 hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer"
       >
         <ChevronLeft className="w-5 h-5" />
       </button>
@@ -225,7 +225,7 @@ export function HeroSection() {
       <button
         onClick={handleNext}
         aria-label="Next slide"
-        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/30 hover:bg-black/60 text-white/80 hover:text-white backdrop-blur-sm flex items-center justify-center transition-all opacity-70 hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer"
+        className="hidden sm:flex absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/30 hover:bg-black/60 text-white/80 hover:text-white backdrop-blur-sm items-center justify-center transition-all opacity-70 hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer"
       >
         <ChevronRight className="w-5 h-5" />
       </button>

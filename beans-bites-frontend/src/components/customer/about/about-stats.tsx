@@ -144,8 +144,8 @@ export function AboutStats() {
           </button>
         </div>
 
-        {/* 4 Cards Grid with vibrant Yellow & Green accents */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+        {/* 4 Cards Grid with vibrant Yellow & Green accents (2x2 on mobile, 4 in a row on desktop) */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {STATS_DATA.map((stat) => {
             const Icon = stat.icon;
             const isGreen = stat.theme === "green";
@@ -153,9 +153,10 @@ export function AboutStats() {
             return (
               <div
                 key={stat.id}
+                onClick={handleRerun}
                 onMouseEnter={handleRerun}
                 className={cn(
-                  "relative rounded-3xl p-6 sm:p-7 border backdrop-blur-md flex flex-col items-center text-center transition-all duration-300 group cursor-default shadow-lg",
+                  "relative rounded-2xl sm:rounded-3xl p-4 sm:p-7 border backdrop-blur-md flex flex-col items-center text-center transition-all duration-300 group cursor-pointer sm:cursor-default shadow-lg",
                   isGreen
                     ? "bg-gradient-to-b from-[#1C281F]/90 via-[#161F18]/90 to-[#121A14]/90 border-emerald-500/30 hover:border-emerald-400/60 hover:shadow-emerald-500/15"
                     : "bg-gradient-to-b from-[#282312]/90 via-[#211C0E]/90 to-[#17140A]/90 border-yellow-500/30 hover:border-yellow-400/60 hover:shadow-yellow-500/15"
@@ -164,7 +165,7 @@ export function AboutStats() {
                 {/* Glow ring */}
                 <div
                   className={cn(
-                    "absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none blur-xl -z-10",
+                    "absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none blur-xl -z-10",
                     isGreen ? "bg-emerald-500/20" : "bg-yellow-500/20"
                   )}
                 />
@@ -172,19 +173,19 @@ export function AboutStats() {
                 {/* Top Colored Icon Box */}
                 <div
                   className={cn(
-                    "w-12 h-12 rounded-2xl flex items-center justify-center mb-4 border shadow-inner transition-transform duration-300 group-hover:scale-110",
+                    "w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center mb-2.5 sm:mb-4 border shadow-inner transition-transform duration-300 group-hover:scale-110",
                     isGreen
                       ? "bg-emerald-500/20 border-emerald-400/40 text-emerald-300 shadow-emerald-500/20"
                       : "bg-yellow-500/20 border-yellow-400/40 text-yellow-300 shadow-yellow-500/20"
                   )}
                 >
-                  <Icon className="w-6 h-6 stroke-[2.2]" />
+                  <Icon className="w-4 h-4 sm:w-6 sm:h-6 stroke-[2.2]" />
                 </div>
 
                 {/* Big Running Animated Number */}
                 <div
                   className={cn(
-                    "text-3xl sm:text-5xl font-black tracking-tight leading-none font-mono drop-shadow-md",
+                    "text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-none font-mono drop-shadow-md",
                     isGreen
                       ? "text-transparent bg-clip-text bg-gradient-to-b from-emerald-200 via-emerald-300 to-green-400"
                       : "text-transparent bg-clip-text bg-gradient-to-b from-yellow-200 via-amber-300 to-yellow-400"
@@ -201,7 +202,7 @@ export function AboutStats() {
                 {/* Label in Vibrant Yellow or Green */}
                 <span
                   className={cn(
-                    "text-xs sm:text-sm font-extrabold mt-2.5 tracking-wide",
+                    "text-[11px] sm:text-sm font-extrabold mt-2 sm:mt-2.5 tracking-wide",
                     isGreen ? "text-emerald-300" : "text-yellow-300"
                   )}
                 >
@@ -209,7 +210,7 @@ export function AboutStats() {
                 </span>
 
                 {/* Subtext */}
-                <span className="text-[11px] text-gray-400 mt-1 font-medium">
+                <span className="text-[10px] sm:text-[11px] text-gray-400 mt-0.5 sm:mt-1 font-medium line-clamp-1 sm:line-clamp-none">
                   {stat.subtext}
                 </span>
               </div>

@@ -34,15 +34,23 @@ export function MenuCategorySidebar({
   return (
     <aside
       className={cn(
-        "bg-white rounded-2xl border border-gray-100 p-3 sm:p-4 shadow-[0_2px_10px_rgba(0,0,0,0.03)]",
+        "bg-white rounded-2xl border border-gray-100 p-2.5 sm:p-3 md:p-4 shadow-[0_2px_10px_rgba(0,0,0,0.03)]",
         className
       )}
     >
-      <h2 className="text-base sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3 px-2 tracking-tight">
-        Categories
-      </h2>
+      <div className="flex items-center justify-between mb-2 md:mb-3 px-1 md:px-2">
+        <h2 className="text-sm sm:text-base md:text-lg font-bold text-gray-900 tracking-tight">
+          Categories
+        </h2>
+        <span className="text-[11px] text-gray-400 font-medium md:hidden">
+          Scroll to explore →
+        </span>
+      </div>
 
-      <nav className="flex flex-col gap-1 sm:gap-1.5" aria-label="Menu categories">
+      <nav
+        className="flex md:flex-col flex-row overflow-x-auto md:overflow-visible no-scrollbar gap-1.5 sm:gap-2 md:gap-1.5 pb-1 md:pb-0 -mx-1 px-1 md:mx-0 md:px-0"
+        aria-label="Menu categories"
+      >
         {categories.map((cat) => {
           const isSelected =
             selectedCategory === cat.slug ||
@@ -54,13 +62,13 @@ export function MenuCategorySidebar({
               key={cat.id}
               onClick={() => onSelectCategory(cat.slug)}
               className={cn(
-                "w-full flex items-center justify-between px-3 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all duration-150 select-none group text-left",
+                "flex-shrink-0 md:w-full flex items-center justify-between gap-2 px-3 py-1.5 sm:py-2 md:py-2.5 rounded-full md:rounded-xl text-xs sm:text-sm font-medium transition-all duration-150 select-none group text-left whitespace-nowrap",
                 isSelected
                   ? "bg-[#FF5A0A] text-white shadow-sm font-semibold scale-[1.01]"
-                  : "text-gray-700 hover:bg-orange-50/70 hover:text-[#FF5A0A]"
+                  : "bg-gray-50 md:bg-transparent text-gray-700 hover:bg-orange-50/70 hover:text-[#FF5A0A]"
               )}
             >
-              <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+              <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
                 {iconMeta.isGrid ? (
                   <svg
                     viewBox="0 0 24 24"
@@ -80,7 +88,7 @@ export function MenuCategorySidebar({
                     <rect x="14" y="14" width="7" height="7" rx="1.5" />
                   </svg>
                 ) : (
-                  <span className="text-base sm:text-lg leading-none flex-shrink-0 drop-shadow-sm">
+                  <span className="text-sm sm:text-base md:text-lg leading-none flex-shrink-0 drop-shadow-sm">
                     {iconMeta.emoji}
                   </span>
                 )}
@@ -90,10 +98,10 @@ export function MenuCategorySidebar({
               {cat.itemCount !== undefined && (
                 <span
                   className={cn(
-                    "text-xs font-semibold px-2 py-0.5 rounded-full flex-shrink-0 transition-colors",
+                    "text-[10px] sm:text-xs font-semibold px-1.5 sm:px-2 py-0.5 rounded-full flex-shrink-0 transition-colors ml-1",
                     isSelected
-                      ? "bg-white/20 text-white"
-                      : "text-gray-400 group-hover:text-[#FF5A0A] group-hover:bg-orange-100/60"
+                      ? "bg-white/25 text-white"
+                      : "bg-white md:bg-transparent text-gray-400 group-hover:text-[#FF5A0A] group-hover:bg-orange-100/60"
                   )}
                 >
                   {cat.itemCount}
