@@ -1,164 +1,202 @@
 "use client";
 
 import * as React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { ArrowLeft, ShoppingCart, Trash2, Plus, Minus } from "lucide-react";
+import { useSearchParams, useRouter } from "next/navigation";
+import { ArrowRight, LayoutGrid, Smartphone, Sparkles, CheckCircle2 } from "lucide-react";
+import { MyCartView } from "@/components/customer/cart/my-cart-view";
+import { PlaceOrderView } from "@/components/customer/cart/place-order-view";
 import { useCartStore } from "@/store/cart.store";
-import { formatPrice } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
-export default function CartPage() {
-  const { items, updateQuantity, removeItem, clearCart, getTotalPrice, getTotalItems } =
-    useCartStore();
+type StepMode = "cart" | "checkout";
+type ViewMode = "stepper" | "side-by-side";
 
+function CartPageContent() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const { getTotalItems } = useCartStore();
+
+  const initialStep: StepMode = searchParams.get("step") === "checkout" ? "checkout" : "cart";
+  const [step, setStep] = React.useState<StepMode>(initialStep);
+  const [viewMode, setViewMode] = React.useState<ViewMode>("stepper");
   const [mounted, setMounted] = React.useState(false);
+
   React.useEffect(() => {
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
+  React.useEffect(() => {
+    const urlStep = searchParams.get("step");
+    if (urlStep === "checkout" && step !== "checkout") {
+      setStep("checkout");
+    } else if (!urlStep && step !== "cart" && viewMode === "stepper") {
+      setStep("cart");
+    }
+  }, [searchParams, step, viewMode]);
+
+  const handleProceedToCheckout = () => {
+    setStep("checkout");
+    router.push("/cart?step=checkout", { scroll: false });
+  };
+
+  const handleBackToCart = () => {
+    setStep("cart");
+    router.push("/cart", { scroll: false });
+  };
+
+  if (!mounted) {
+    return (
+      <div className="min-h-[70vh] flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-[#FF5A0A] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  const totalItems = getTotalItems();
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div className="flex items-center justify-between border-b border-gray-100 pb-4 mb-6">
-        <div className="flex items-center gap-3">
-          <Link
-            href="/"
-            className="p-2 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
-            aria-label="Back to home"
-          >
-            <ArrowLeft className="w-5 h-5" />
-          </Link>
-          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
-            Shopping Cart ({getTotalItems()})
-          </h1>
-        </div>
-        {items.length > 0 && (
-          <button
-            onClick={clearCart}
-            className="text-xs text-rose-500 hover:text-rose-700 font-medium flex items-center gap-1"
-          >
-            <Trash2 className="w-3.5 h-3.5" />
-            <span>Clear Cart</span>
-          </button>
-        )}
-      </div>
-
-      {items.length === 0 ? (
-        <div className="text-center py-16 bg-gray-50 rounded-2xl border border-dashed border-gray-200">
-          <ShoppingCart className="w-12 h-12 text-gray-400 mx-auto mb-3" />
-          <h2 className="text-base font-semibold text-gray-800">Your cart is empty</h2>
-          <p className="text-xs text-gray-500 mt-1 mb-5">
-            Add delicious pizzas, burgers, momo, and drinks from our menu.
-          </p>
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 bg-[#FF5A0A] hover:bg-[#E04E07] text-white px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all shadow-sm"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Browse Homepage</span>
-          </Link>
-        </div>
-      ) : (
-        <div className="space-y-6">
-          <div className="divide-y divide-gray-100 bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-            {items.map((cartItem) => (
-              <div
-                key={cartItem.id}
-                className="p-4 sm:p-5 flex items-center justify-between gap-4"
-              >
-                <div className="flex items-center gap-3 sm:gap-4">
-                  <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
-                    <Image
-                      src={cartItem.item.imageUrl}
-                      alt={cartItem.item.name}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-sm sm:text-base text-gray-900">
-                      {cartItem.item.name}
-                    </h3>
-                    <p className="text-xs text-[#FF5A0A] font-bold mt-0.5">
-                      {formatPrice(cartItem.item.price)} each
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3 sm:gap-6">
-                  {/* Quantity selector */}
-                  <div className="flex items-center border border-gray-200 rounded-lg overflow-hidden bg-gray-50">
-                    <button
-                      onClick={() =>
-                        updateQuantity(cartItem.item.id, cartItem.quantity - 1)
-                      }
-                      className="p-1.5 text-gray-600 hover:bg-gray-200 transition-colors"
-                      aria-label="Decrease quantity"
-                    >
-                      <Minus className="w-3.5 h-3.5" />
-                    </button>
-                    <span className="w-8 text-center text-xs font-bold text-gray-800">
-                      {cartItem.quantity}
-                    </span>
-                    <button
-                      onClick={() =>
-                        updateQuantity(cartItem.item.id, cartItem.quantity + 1)
-                      }
-                      className="p-1.5 text-gray-600 hover:bg-gray-200 transition-colors"
-                      aria-label="Increase quantity"
-                    >
-                      <Plus className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-
-                  <span className="font-bold text-sm sm:text-base text-gray-900 min-w-[70px] text-right">
-                    {formatPrice(cartItem.item.price * cartItem.quantity)}
-                  </span>
-
-                  <button
-                    onClick={() => removeItem(cartItem.item.id)}
-                    className="p-1.5 text-gray-400 hover:text-rose-600 transition-colors"
-                    aria-label="Remove item"
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Cart Summary */}
-          <div className="bg-gray-50 rounded-2xl p-5 border border-gray-200/80 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div>
-              <span className="text-xs text-gray-500 uppercase tracking-wider font-semibold block">
-                Total Amount
+    <div className="min-h-screen bg-[#FBF7F4] py-8 sm:py-12 px-3 sm:px-6 lg:px-8">
+      {/* Top Controls & Navigation Bar */}
+      <div className="max-w-6xl mx-auto mb-6 sm:mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-orange-100/60">
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-orange-100 text-[#FF5A0A]">
+                <Sparkles className="w-3 h-3" />
+                <span>Express Checkout</span>
               </span>
-              <span className="text-2xl font-black text-[#FF5A0A]">
-                {formatPrice(getTotalPrice())}
+              <span className="text-xs text-gray-500 font-medium">
+                {totalItems} items in order
               </span>
             </div>
+            <h1 className="text-xl sm:text-2xl font-black text-gray-900 mt-1 tracking-tight">
+              Order Checkout Flow
+            </h1>
+          </div>
 
-            <div className="flex items-center gap-3 w-full sm:w-auto">
-              <Link
-                href="/"
-                className="w-1/2 sm:w-auto text-center px-4 py-2.5 rounded-xl border border-gray-300 text-xs sm:text-sm font-medium hover:bg-white transition-colors"
-              >
-                Add More Items
-              </Link>
+          {/* Stepper Tabs & View Switcher */}
+          <div className="flex items-center gap-2 flex-wrap">
+            {/* Step 1 vs Step 2 Selector */}
+            <div className="inline-flex items-center p-1 bg-white border border-gray-200 rounded-2xl shadow-sm">
               <button
-                onClick={() =>
-                  alert("Order Checkout flow will connect with Express.js Backend in the next step!")
-                }
-                className="w-1/2 sm:w-auto bg-[#FF5A0A] hover:bg-[#E04E07] text-white px-6 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all shadow-sm"
+                type="button"
+                onClick={handleBackToCart}
+                className={cn(
+                  "px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5",
+                  step === "cart" && viewMode === "stepper"
+                    ? "bg-[#FF5A0A] text-white shadow-sm"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                )}
               >
-                Proceed to Checkout
+                <span>1. My Cart</span>
+                <span className="w-4 h-4 rounded-full bg-white/20 flex items-center justify-center text-[10px]">
+                  {totalItems}
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleProceedToCheckout}
+                className={cn(
+                  "px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5",
+                  step === "checkout" && viewMode === "stepper"
+                    ? "bg-[#FF5A0A] text-white shadow-sm"
+                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
+                )}
+              >
+                <span>2. Place Order</span>
+              </button>
+            </div>
+
+            {/* Desktop Side-by-Side Reference Mode Toggle */}
+            <div className="hidden xl:inline-flex items-center p-1 bg-white border border-gray-200 rounded-2xl shadow-sm">
+              <button
+                type="button"
+                onClick={() => setViewMode("stepper")}
+                className={cn(
+                  "p-1.5 rounded-xl text-xs font-medium transition-all flex items-center gap-1",
+                  viewMode === "stepper"
+                    ? "bg-gray-100 text-gray-900 font-bold"
+                    : "text-gray-500 hover:text-gray-900"
+                )}
+                title="Single Screen Flow"
+              >
+                <Smartphone className="w-4 h-4" />
+                <span className="text-[11px]">Single View</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewMode("side-by-side")}
+                className={cn(
+                  "p-1.5 rounded-xl text-xs font-medium transition-all flex items-center gap-1",
+                  viewMode === "side-by-side"
+                    ? "bg-[#FF5A0A] text-white font-bold shadow-sm"
+                    : "text-gray-500 hover:text-gray-900"
+                )}
+                title="View Both Screens Side-by-Side (Reference Layout)"
+              >
+                <LayoutGrid className="w-4 h-4" />
+                <span className="text-[11px]">Side-by-Side</span>
               </button>
             </div>
           </div>
+        </div>
+      </div>
+
+      {/* Main View Area */}
+      {viewMode === "side-by-side" ? (
+        /* SIDE-BY-SIDE DUAL MOCKUP VIEW: Exactly matches the user reference image media_1793859840501_6e11a0d9.jpg */
+        <div className="max-w-[1400px] mx-auto">
+          <div className="flex flex-col xl:flex-row items-center justify-center gap-6 xl:gap-8">
+            {/* Screen 1: My Cart */}
+            <div className="w-full max-w-[440px] flex-shrink-0">
+              <MyCartView onProceedToOrder={handleProceedToCheckout} />
+            </div>
+
+            {/* Central Animated Transition Arrow */}
+            <div className="flex-shrink-0 flex flex-col items-center justify-center py-2 xl:py-0">
+              <div className="w-12 h-12 rounded-full bg-white border border-orange-200 text-[#FF5A0A] shadow-md flex items-center justify-center">
+                <ArrowRight className="w-6 h-6 stroke-[2.5]" />
+              </div>
+              <span className="text-[11px] font-bold text-gray-400 mt-2 uppercase tracking-wider">
+                Proceed
+              </span>
+            </div>
+
+            {/* Screen 2: Place Order */}
+            <div className="w-full max-w-[700px] flex-1">
+              <PlaceOrderView onBackToCart={handleBackToCart} />
+            </div>
+          </div>
+        </div>
+      ) : (
+        /* STEPPER FOCUSED VIEW: Step 1 or Step 2 */
+        <div className="max-w-4xl mx-auto transition-all duration-300">
+          {step === "cart" ? (
+            <div className="animate-in fade-in-50 slide-in-from-left-4 duration-300">
+              <MyCartView onProceedToOrder={handleProceedToCheckout} />
+            </div>
+          ) : (
+            <div className="animate-in fade-in-50 slide-in-from-right-4 duration-300">
+              <PlaceOrderView onBackToCart={handleBackToCart} />
+            </div>
+          )}
         </div>
       )}
     </div>
   );
 }
 
+export default function CartPage() {
+  return (
+    <React.Suspense
+      fallback={
+        <div className="min-h-[70vh] flex items-center justify-center">
+          <div className="w-8 h-8 border-4 border-[#FF5A0A] border-t-transparent rounded-full animate-spin" />
+        </div>
+      }
+    >
+      <CartPageContent />
+    </React.Suspense>
+  );
+}
