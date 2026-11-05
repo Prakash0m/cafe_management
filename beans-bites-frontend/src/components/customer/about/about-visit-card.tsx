@@ -114,3 +114,4 @@ export function AboutVisitCard() {
     </section>
   );
 }
+
