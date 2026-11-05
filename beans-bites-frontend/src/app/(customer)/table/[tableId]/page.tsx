@@ -9,8 +9,6 @@ import { TableCategoryStrip } from "@/components/customer/table/table-category-s
 import { TableFoodListItem } from "@/components/customer/table/table-food-list-item";
 import { FoodDetailsSheet } from "@/components/customer/table/food-details-sheet";
 import { TableCartBar } from "@/components/customer/table/table-cart-bar";
-import { EditIngredientsModal } from "@/components/customer/table/edit-ingredients-modal";
-import { TableQrDialog } from "@/components/customer/table/table-qr-dialog";
 import { MOCK_ALL_ITEMS } from "@/data/mock/food-items";
 import { toast } from "sonner";
 import { UtensilsCrossed, Sparkles, Search, RefreshCw } from "lucide-react";
@@ -61,8 +59,6 @@ export default function TableMenuPage() {
 
   // Modals & Bottom Sheet
   const [activeItemForSheet, setActiveItemForSheet] = React.useState<FoodItem | null>(null);
-  const [isQrModalOpen, setIsQrModalOpen] = React.useState(false);
-  const [isStaffModalOpen, setIsStaffModalOpen] = React.useState(false);
 
   // Fetch Menu from Backend API `/api/menu`
   const fetchMenuFromBackend = React.useCallback(async () => {
@@ -169,8 +165,7 @@ export default function TableMenuPage() {
       {/* 1. Header with Table Badge */}
       <TableHeader
         tableNumber={formattedTable}
-        onOpenQrModal={() => setIsQrModalOpen(true)}
-        onOpenStaffModal={() => setIsStaffModalOpen(true)}
+        totalCartItems={totalItems}
       />
 
       {/* 2. Horizontal Category Strip + Search Bar */}
@@ -266,21 +261,7 @@ export default function TableMenuPage() {
         totalPayable={totalPayable}
         tableNumber={formattedTable}
       />
-
-      {/* 6. Staff / Backend Ingredients Manager Modal */}
-      <EditIngredientsModal
-        isOpen={isStaffModalOpen}
-        onClose={() => setIsStaffModalOpen(false)}
-        items={menuItems}
-        onItemUpdated={handleItemUpdated}
-      />
-
-      {/* 7. Table QR Code Dialog */}
-      <TableQrDialog
-        isOpen={isQrModalOpen}
-        onClose={() => setIsQrModalOpen(false)}
-        currentTable={`T${tableDigits}`}
-      />
     </div>
   );
 }
+

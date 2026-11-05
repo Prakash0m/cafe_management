@@ -132,3 +132,4 @@ export function TableQrDialog({
     </div>
   );
 }
+
