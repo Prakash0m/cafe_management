@@ -23,3 +23,4 @@ export interface OfferDeal {
   terms: string[];
   applicableItemsText: string;
 }
+

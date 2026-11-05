@@ -263,3 +263,4 @@ export function OfferCard({ offer }: OfferCardProps) {
     </div>
   );
 }
+
