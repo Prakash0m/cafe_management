@@ -8,6 +8,7 @@ import { CategoryStrip } from "@/components/customer/home/category-strip";
 import { PopularItemsSection } from "@/components/customer/home/popular-items-section";
 import { WeekendPromotion } from "@/components/customer/home/weekend-promotion";
 import { OffersSection } from "@/components/customer/home/offers-section";
+import { AboutSection } from "@/components/customer/home/about-section";
 import { MOCK_HOMEPAGE_DATA } from "@/data/mock/homepage-data";
 
 export default function CustomerHomePage() {
@@ -57,6 +58,9 @@ export default function CustomerHomePage() {
 
       {/* 5. Special Offers & Culinary Deals Section */}
       <OffersSection />
+
+      {/* 6. Our Culinary Journey & Story Section */}
+      <AboutSection />
     </div>
   );
 }
