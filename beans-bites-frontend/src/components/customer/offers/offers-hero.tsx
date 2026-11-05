@@ -2,21 +2,11 @@
 
 import * as React from "react";
 import Image from "next/image";
-import {
-  ArrowRight,
-  ChevronLeft,
-  ChevronRight,
-  Sparkles,
-  TicketPercent,
-  Check,
-  Percent,
-  ShieldCheck,
-  Utensils,
-} from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Clock } from "lucide-react";
 import { ASSETS } from "@/lib/assets";
+import { HeroBenefits } from "@/components/customer/home/hero-benefits";
 import { useCartStore } from "@/store/cart.store";
 import { toast } from "sonner";
-import { DealCountdown } from "./deal-countdown";
 
 interface OfferSlide {
   id: string;
@@ -26,7 +16,6 @@ interface OfferSlide {
   headingLine2: string;
   description: string;
   couponCode: string;
-  discountBadge: string;
   primaryButtonText: string;
   secondaryButtonText: string;
 }
@@ -35,81 +24,90 @@ const OFFER_SLIDES: OfferSlide[] = [
   {
     id: "offer-slide-1",
     image: ASSETS.hero.slides[0], // Gourmet burger & crispy fries
-    badge: "WEEKEND SPECIAL • 20% OFF PIZZAS & BURGERS",
+    badge: "WEEKEND SPECIAL • 20% OFF",
     headingLine1: "Special Offers &",
     headingLine2: "Culinary Discounts",
     description:
-      "Taste more for less! Enjoy flat 20% off all artisan pizzas & burgers, plus daily happy hour treats and student passes.",
+      "Fresh ingredients. Great taste. Enjoy flat 20% off all artisan pizzas & burgers with code WEEKEND20.",
     couponCode: "WEEKEND20",
-    discountBadge: "20% OFF",
     primaryButtonText: "Apply Code WEEKEND20",
     secondaryButtonText: "View All Deals",
   },
   {
     id: "offer-slide-2",
     image: ASSETS.hero.slides[1], // Wood-fired pizza cheese pull
-    badge: "AUTHENTIC ITALIAN • WOOD-FIRED SPECIAL",
+    badge: "AUTHENTIC ITALIAN • WOOD-FIRED",
     headingLine1: "Wood-Fired Pizza",
     headingLine2: "Weekend Feast",
     description:
-      "Crispy stone-baked crust, rich marinara sauce, melted mozzarella and aromatic basil with instant 20% savings.",
+      "Crispy stone-baked crust, rich marinara sauce, melted mozzarella and aromatic fresh basil.",
     couponCode: "WEEKEND20",
-    discountBadge: "20% OFF",
     primaryButtonText: "Order Pizza (20% Off)",
     secondaryButtonText: "Explore Pizzas",
   },
   {
     id: "offer-slide-3",
     image: ASSETS.hero.slides[3], // Specialty coffee & chocolate brownie
-    badge: "HAPPY HOUR DEALS • DAILY 3 PM - 6 PM",
+    badge: "HAPPY HOUR • 3 PM – 6 PM",
     headingLine1: "Artisan Coffee",
-    headingLine2: "& Dessert Rush",
+    headingLine2: "& Sweet Bites",
     description:
-      "Recharge your afternoon with 30% off all espresso drinks, iced brews, and chocolate brownies (3:00 PM – 6:00 PM).",
+      "Masterfully poured latte art, rich single-origin espresso and decadent chocolate brownies at 30% off.",
     couponCode: "HAPPYHOUR",
-    discountBadge: "30% OFF",
     primaryButtonText: "Apply Code HAPPYHOUR",
     secondaryButtonText: "View Beverages",
   },
   {
     id: "offer-slide-4",
     image: ASSETS.hero.slides[2], // Steamed Mo:Mo
-    badge: "KATHMANDU SPECIAL • COMBO FEAST",
-    headingLine1: "Himalayan Mo:Mo",
-    headingLine2: "Platter Combo",
+    badge: "HIMALAYAN FLAVORS • FRESHLY STEAMED",
+    headingLine1: "Steamed Mo:Mo",
+    headingLine2: "Combo Platter",
     description:
-      "25% off authentic steamed, fried and kothey momos paired with refreshing iced lattes and fresh lemon sodas.",
+      "Authentic handmade dumplings served with our chef's spicy tomato and sesame dipping sauce at 25% off.",
     couponCode: "MOMO25",
-    discountBadge: "25% OFF",
     primaryButtonText: "Apply Code MOMO25",
     secondaryButtonText: "View Mo:Mo Deals",
   },
   {
     id: "offer-slide-5",
-    image: ASSETS.hero.slides[4], // Grand food feast banquet
+    image: ASSETS.hero.slides[4], // Grand feast banquet
     badge: "FAMILY & FRIENDS • GROUP SHARING",
     headingLine1: "Grand Feast",
     headingLine2: "Save 30% Off",
     description:
-      "Flat 30% discount on family orders above NPR 2,000. Perfect for birthdays, office lunches, and celebrations.",
+      "Flat 30% discount on large family feasts above NPR 2,000. Perfect for birthdays and celebrations.",
     couponCode: "FAMILY30",
-    discountBadge: "30% OFF",
     primaryButtonText: "Apply Code FAMILY30",
     secondaryButtonText: "Explore Menu",
   },
 ];
 
-const OFFER_PERKS = [
-  { id: "p1", label: "Up to 30% Savings", icon: Percent },
-  { id: "p2", label: "Instant 1-Click Cart Apply", icon: TicketPercent },
-  { id: "p3", label: "Valid Dine-In & Takeaway", icon: Utensils },
-  { id: "p4", label: "Valid Across All Outlets", icon: ShieldCheck },
-];
-
 export function OffersHero() {
   const [currentSlide, setCurrentSlide] = React.useState(0);
   const [isPaused, setIsPaused] = React.useState(false);
-  const { applyCoupon, appliedCoupon } = useCartStore();
+  const { applyCoupon } = useCartStore();
+
+  // Clean, realistic live countdown timer
+  const [timeLeft, setTimeLeft] = React.useState({
+    hours: 7,
+    minutes: 41,
+    seconds: 41,
+  });
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev.seconds > 0) return { ...prev, seconds: prev.seconds - 1 };
+        if (prev.minutes > 0) return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
+        if (prev.hours > 0) return { hours: prev.hours - 1, minutes: 59, seconds: 59 };
+        return prev;
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatDigit = (num: number) => String(num).padStart(2, "0");
 
   // Auto-play carousel every 5 seconds (paused when user hovers)
   React.useEffect(() => {
@@ -162,7 +160,6 @@ export function OffersHero() {
   };
 
   const active = OFFER_SLIDES[currentSlide];
-  const isApplied = appliedCoupon?.code === active.couponCode;
 
   return (
     <section
@@ -197,54 +194,45 @@ export function OffersHero() {
         );
       })}
 
-      {/* Offers Content Container - Exact same height & responsive constraints as home */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-6 sm:py-8 flex flex-col justify-between h-full min-h-[380px] sm:min-h-[400px] lg:h-[420px]">
-        {/* Dynamic Text Content with smooth transition */}
-        <div className="max-w-xl space-y-2 sm:space-y-2.5 pt-1 sm:pt-2 transition-all duration-500">
-          {/* Small orange uppercase badge */}
-          <div className="inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-bold tracking-[0.18em] text-[#FF7A24] uppercase">
-            <Sparkles className="w-3.5 h-3.5 text-[#FF7A24]" />
+      {/* Offers Content Container - Exact same layout, padding & height as home */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8 sm:py-10 flex flex-col justify-between h-full min-h-[380px] sm:min-h-[400px] lg:h-[420px]">
+        {/* Dynamic Text Content */}
+        <div className="max-w-xl space-y-3 sm:space-y-4 pt-2 sm:pt-4 transition-all duration-500">
+          {/* Small orange uppercase badge with simple clean timer */}
+          <div className="flex flex-wrap items-center gap-2 text-[10px] sm:text-[11px] font-bold tracking-[0.18em] text-[#FF7A24] uppercase">
             <span>{active.badge}</span>
+            <span className="text-white/30">•</span>
+            <span className="inline-flex items-center gap-1.5 text-white/90 normal-case font-medium tracking-normal text-xs">
+              <Clock className="w-3.5 h-3.5 text-[#FF5A0A]" />
+              <span>
+                Ends in{" "}
+                <strong className="text-white font-mono font-bold">
+                  {formatDigit(timeLeft.hours)}h {formatDigit(timeLeft.minutes)}m{" "}
+                  {formatDigit(timeLeft.seconds)}s
+                </strong>
+              </span>
+            </span>
           </div>
 
           {/* Main Heading */}
-          <h1 className="text-3xl sm:text-4xl lg:text-[42px] font-extrabold tracking-tight leading-[1.12] text-white">
+          <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold tracking-tight leading-[1.12] text-white">
             {active.headingLine1} <br />
             <span className="text-[#FF5A0A]">{active.headingLine2}</span>
           </h1>
 
           {/* Description */}
-          <p className="text-xs sm:text-sm text-gray-200/90 leading-relaxed max-w-md font-normal line-clamp-2">
+          <p className="text-xs sm:text-sm text-gray-200/90 leading-relaxed max-w-md font-normal">
             {active.description}
           </p>
 
-          {/* Prominent Live Deal Ends Countdown Widget */}
-          <div className="pt-0.5">
-            <DealCountdown
-              variant="hero"
-              dealTitle={`${active.headingLine1} ${active.headingLine2}`}
-              couponCode={active.couponCode}
-            />
-          </div>
-
-          {/* CTA Buttons Row */}
-          <div className="flex items-center gap-3 sm:gap-4 pt-1">
+          {/* CTA Buttons */}
+          <div className="flex items-center gap-3 sm:gap-4 pt-1 sm:pt-2">
             <button
               onClick={() => handleApplySlideCoupon(active.couponCode)}
               className="inline-flex items-center gap-2 bg-[#FF5A0A] hover:bg-[#E04E07] active:bg-[#C94304] text-white text-xs sm:text-sm font-semibold px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl transition-all shadow-md active:scale-95 group cursor-pointer"
             >
-              {isApplied ? (
-                <>
-                  <Check className="w-4 h-4 stroke-[3]" />
-                  <span>Code {active.couponCode} Active</span>
-                </>
-              ) : (
-                <>
-                  <TicketPercent className="w-4 h-4" />
-                  <span>{active.primaryButtonText}</span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </>
-              )}
+              <span>{active.primaryButtonText}</span>
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </button>
 
             <button
@@ -256,23 +244,9 @@ export function OffersHero() {
           </div>
         </div>
 
-        {/* Bottom Bar: Offer Guarantees + Carousel 5-Dots */}
-        <div className="pt-3 pb-1 border-t border-white/10 mt-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          {/* Guarantees / Perks */}
-          <div className="w-full sm:w-auto flex items-center justify-start flex-wrap gap-x-5 sm:gap-x-7 gap-y-1.5 text-white/95">
-            {OFFER_PERKS.map((p) => {
-              const Icon = p.icon;
-              return (
-                <div
-                  key={p.id}
-                  className="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs font-medium text-white/90"
-                >
-                  <Icon className="w-3.5 h-3.5 text-white/90 flex-shrink-0" />
-                  <span className="whitespace-nowrap">{p.label}</span>
-                </div>
-              );
-            })}
-          </div>
+        {/* Bottom Bar: Benefits + Carousel 5-Dots - Exactly like home */}
+        <div className="pt-6 sm:pt-4 pb-2 border-t border-white/10 mt-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <HeroBenefits />
 
           {/* Carousel Pagination Dots */}
           <div className="flex items-center gap-2 z-20 self-center sm:self-auto">

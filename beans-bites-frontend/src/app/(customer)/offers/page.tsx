@@ -6,7 +6,6 @@ import { OffersHero } from "@/components/customer/offers/offers-hero";
 import { OffersFilter } from "@/components/customer/offers/offers-filter";
 import { OfferCard } from "@/components/customer/offers/offer-card";
 import { HowToRedeem } from "@/components/customer/offers/how-to-redeem";
-import { DealCountdown } from "@/components/customer/offers/deal-countdown";
 import { MOCK_OFFERS } from "@/data/mock/offers-data";
 import { OfferCategory } from "@/types/offers.types";
 import { useCartStore } from "@/store/cart.store";
@@ -33,18 +32,11 @@ export default function OffersPage() {
 
   return (
     <div className="min-h-screen bg-[#FBF7F4] flex flex-col">
-      {/* 1. Hero Section with Live Flash Countdown */}
+      {/* 1. Hero Section matching Home Hero Carousel exactly */}
       <OffersHero />
 
       {/* 2. Main Content Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 w-full space-y-6">
-        {/* Prominent Live Deal Status & Countdown Banner */}
-        <DealCountdown
-          variant="banner"
-          dealTitle="Weekend Pizza & Burger Feast (20% OFF)"
-          couponCode="WEEKEND20"
-        />
-
         {/* Currently Applied Voucher Bar (if user already activated a voucher) */}
         {appliedCoupon && (
           <div className="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-sm animate-in fade-in duration-300">
