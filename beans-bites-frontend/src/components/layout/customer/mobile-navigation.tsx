@@ -13,6 +13,7 @@ import {
   X,
   User,
   ShoppingBag,
+  QrCode,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ASSETS } from "@/lib/assets";
@@ -28,6 +29,7 @@ interface MobileNavigationProps {
 const NAV_ITEMS = [
   { label: "Home", href: "/", icon: Home },
   { label: "Menu", href: "/menu", icon: UtensilsCrossed },
+  { label: "Table QR Menu", href: "/table/T4", icon: QrCode },
   { label: "Offers", href: "/offers", icon: Tag },
   { label: "About", href: "/about", icon: Info },
   { label: "Contact", href: "/contact", icon: Phone },

@@ -12,6 +12,13 @@ export interface FoodItem {
   preparationTime?: string;
   calories?: number;
   rating?: number;
+  // Ingredients and culinary details (k k used gareko foods vitra)
+  ingredients?: string[];
+  allergens?: string[];
+  spiciness?: "none" | "mild" | "medium" | "spicy";
+  portion?: string;
+  chefNotes?: string;
+  updatedAt?: string;
 }
 
 export interface FoodCategory {

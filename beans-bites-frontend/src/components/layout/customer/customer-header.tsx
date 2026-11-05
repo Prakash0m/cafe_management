@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingCart, User, Menu } from "lucide-react";
+import { ShoppingCart, User, Menu, QrCode } from "lucide-react";
 import { ASSETS } from "@/lib/assets";
 import { DesktopNavigation } from "./desktop-navigation";
 import { MobileNavigation } from "./mobile-navigation";
@@ -68,6 +68,16 @@ export function CustomerHeader() {
           <div className="hidden sm:block w-44 md:w-52 lg:w-56">
             <SearchBar />
           </div>
+
+          {/* Table QR Order Link */}
+          <Link
+            href="/table/T4"
+            className="inline-flex items-center gap-1.5 text-[11px] font-bold text-gray-700 hover:text-[#FF5A0A] bg-orange-50/80 hover:bg-orange-100 border border-orange-200/70 px-2.5 py-1.5 rounded-lg transition-colors"
+            title="Scan or View Table QR Menu"
+          >
+            <QrCode className="w-3.5 h-3.5 text-[#FF5A0A]" />
+            <span className="hidden sm:inline">Table QR</span>
+          </Link>
 
           {/* Cart Icon with Red Quantity Badge */}
           <Link
