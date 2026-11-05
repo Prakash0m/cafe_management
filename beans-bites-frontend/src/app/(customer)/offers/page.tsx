@@ -66,7 +66,7 @@ export default function OffersPage() {
         )}
 
         {/* Section Heading & Category Filter Strip */}
-        <div className="space-y-4">
+        <div id="offers-grid-section" className="space-y-4 pt-2 scroll-mt-6">
           <div className="text-center max-w-xl mx-auto space-y-1">
             <h2 className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight">
               Explore Active Promotions

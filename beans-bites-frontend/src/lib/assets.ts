@@ -57,7 +57,6 @@ export const ASSETS = {
   },
   promotions: {
     weekendSpecial: "/assets/promotions/weekend-special.webp",
-    offersBanner: "/assets/promotions/offers-banner.webp",
   },
 } as const;
 
