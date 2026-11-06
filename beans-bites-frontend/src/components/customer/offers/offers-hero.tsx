@@ -186,133 +186,256 @@ export function OffersHero() {
   const active = OFFER_SLIDES[currentSlide];
 
   return (
-    <section
-      className="relative w-full min-h-[380px] sm:min-h-[400px] lg:h-[420px] bg-[#1E110A] overflow-hidden flex items-center select-none touch-pan-y"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-      aria-label="Offers Carousel"
-    >
-      {/* 5 Background Images with Smooth Crossfade & Auto-rotation */}
-      {OFFER_SLIDES.map((slide, index) => {
-        const isCurrent = index === currentSlide;
-        return (
-          <div
-            key={slide.id}
-            className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-              isCurrent ? "opacity-100 z-0" : "opacity-0 pointer-events-none"
-            }`}
-            aria-hidden={!isCurrent}
-          >
-            <Image
-              src={slide.image}
-              alt={slide.headingLine1}
-              fill
-              priority={index === 0}
-              sizes="100vw"
-              className="object-cover object-[center_right] sm:object-center brightness-[0.93] transform scale-100 transition-transform duration-1000 ease-out"
-            />
-            {/* Cinematic Gradient Overlays for High Legibility */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#180C07]/95 via-[#180C07]/75 to-transparent sm:w-2/3" />
-            <div className="absolute inset-0 bg-black/25" />
-          </div>
-        );
-      })}
+    <div className="w-full">
+      {/* ========================================================
+          MOBILE VIEW (< sm): App Banner Card with Dedicated 16:9 
+          Food Image Showcase (Zero Cropping, Fully Visible, Bright)
+          ======================================================== */}
+      <section
+        className="sm:hidden relative w-full bg-[#180C07] overflow-hidden select-none touch-pan-y"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        aria-label="Mobile Offers Carousel"
+      >
+        {/* 1. Mobile Food Image Showcase - 16:9 Aspect Ratio with Smooth Crossfade */}
+        <div className="relative w-full aspect-[16/9] max-h-56 bg-black overflow-hidden">
+          {OFFER_SLIDES.map((slide, index) => {
+            const isCurrent = index === currentSlide;
+            return (
+              <div
+                key={slide.id}
+                className={`absolute inset-0 transition-opacity duration-500 ease-in-out ${
+                  isCurrent ? "opacity-100 z-10" : "opacity-0 pointer-events-none z-0"
+                }`}
+                aria-hidden={!isCurrent}
+              >
+                <Image
+                  src={slide.image}
+                  alt={slide.headingLine1}
+                  fill
+                  priority={index === 0}
+                  sizes="100vw"
+                  className="object-cover object-center brightness-[1.03] contrast-[1.04]"
+                />
+                {/* Subtle vignette gradients */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#180C07] via-transparent to-black/30" />
+              </div>
+            );
+          })}
 
-      {/* Offers Content Container - Exact same layout, padding & height as home */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-8 sm:py-10 flex flex-col justify-between h-full min-h-[380px] sm:min-h-[400px] lg:h-[420px]">
-        {/* Dynamic Text Content */}
-        <div className="max-w-xl space-y-3 sm:space-y-4 pt-2 sm:pt-4 transition-all duration-500">
-          {/* Small orange uppercase badge with simple clean timer */}
-          <div className="flex flex-wrap items-center gap-2 text-[10px] sm:text-[11px] font-bold tracking-[0.18em] text-[#FF7A24] uppercase">
-            <span>{active.badge}</span>
-            <span className="text-white/30">•</span>
-            <span className="inline-flex items-center gap-1.5 text-white/90 normal-case font-medium tracking-normal text-xs">
-              <Clock className="w-3.5 h-3.5 text-[#FF5A0A]" />
+          {/* Floating Category Badge with Live Countdown (Top-Left of Image) */}
+          <div className="absolute top-2.5 left-3 z-20">
+            <span className="inline-flex items-center gap-1.5 bg-[#140A05]/90 border border-orange-500/50 backdrop-blur-md px-2.5 py-1 rounded-full text-white text-[10px] font-semibold shadow-md">
+              <Clock className="w-3 h-3 text-[#FF5A0A]" />
               <span>
                 Ends in{" "}
                 <strong className="text-white font-mono font-bold">
-                  {formatDigit(timeLeft.hours)}h {formatDigit(timeLeft.minutes)}m{" "}
-                  {formatDigit(timeLeft.seconds)}s
+                  {formatDigit(timeLeft.hours)}:{formatDigit(timeLeft.minutes)}:{formatDigit(timeLeft.seconds)}
                 </strong>
               </span>
             </span>
           </div>
 
+          {/* Floating Deal Badge (Bottom-Left of Image) */}
+          <div className="absolute bottom-2.5 left-3 z-20">
+            <span className="inline-block bg-[#FF5A0A] text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-md">
+              {active.badge}
+            </span>
+          </div>
+
+          {/* Image Counter Badge (Bottom-Right of Image) */}
+          <div className="absolute bottom-2.5 right-3 z-20 bg-black/60 backdrop-blur-sm text-white/90 text-[10px] font-semibold px-2 py-0.5 rounded-full">
+            {currentSlide + 1} / {OFFER_SLIDES.length}
+          </div>
+        </div>
+
+        {/* 2. Mobile Content Card (Title, Description, Buttons, Dots) */}
+        <div className="px-4 pt-3 pb-3 space-y-2.5 bg-[#180C07]">
           {/* Main Heading */}
-          <h1 className="text-2xl sm:text-4xl lg:text-[44px] font-extrabold tracking-tight leading-[1.12] text-white">
-            {active.headingLine1} <br />
+          <h1 className="text-xl font-extrabold tracking-tight leading-snug text-white">
+            {active.headingLine1}{" "}
             <span className="text-[#FF5A0A]">{active.headingLine2}</span>
           </h1>
 
           {/* Description */}
-          <p className="text-xs sm:text-sm text-gray-200/90 leading-relaxed max-w-md font-normal">
+          <p className="text-xs text-gray-300 leading-relaxed line-clamp-2">
             {active.description}
           </p>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-wrap sm:flex-nowrap items-center gap-2.5 sm:gap-4 pt-1 sm:pt-2">
+          {/* Touch-Friendly Action Buttons */}
+          <div className="flex items-center gap-2 pt-0.5">
             <button
               onClick={() => handleApplySlideCoupon(active.couponCode)}
-              className="inline-flex items-center gap-2 bg-[#FF5A0A] hover:bg-[#E04E07] active:bg-[#C94304] text-white text-xs sm:text-sm font-semibold px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl transition-all shadow-md active:scale-95 group cursor-pointer"
+              className="flex-1 inline-flex items-center justify-center gap-1.5 bg-[#FF5A0A] hover:bg-[#E04E07] active:bg-[#C94304] text-white text-xs font-semibold py-2.5 px-3 rounded-xl transition-all shadow-md active:scale-95 cursor-pointer"
             >
               <span>{active.primaryButtonText}</span>
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
 
             <button
               onClick={handleScrollToOffers}
-              className="inline-flex items-center justify-center border border-white/60 bg-black/20 hover:bg-white/10 active:bg-white/20 text-white text-xs sm:text-sm font-medium px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl backdrop-blur-sm transition-all cursor-pointer"
+              className="flex-1 inline-flex items-center justify-center border border-white/35 bg-white/5 active:bg-white/15 text-white text-xs font-medium py-2.5 px-3 rounded-xl text-center transition-all cursor-pointer"
             >
               {active.secondaryButtonText}
             </button>
           </div>
-        </div>
 
-        {/* Bottom Bar: Benefits + Carousel 5-Dots - Exactly like home */}
-        <div className="pt-6 sm:pt-4 pb-2 border-t border-white/10 mt-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <HeroBenefits />
-
-          {/* Carousel Pagination Dots */}
-          <div className="flex items-center gap-2 z-20 self-center sm:self-auto">
+          {/* Mobile Pagination Dots */}
+          <div className="flex items-center justify-center gap-1.5 pt-1.5 pb-0.5">
             {OFFER_SLIDES.map((slide, idx) => (
               <button
                 key={slide.id}
                 onClick={() => setCurrentSlide(idx)}
                 aria-label={`Go to slide ${idx + 1}`}
-                className="p-1.5 cursor-pointer flex items-center justify-center"
+                className="p-1 cursor-pointer flex items-center justify-center"
               >
                 <span
-                  className={`block transition-all duration-300 rounded-full h-2 ${
+                  className={`block transition-all duration-300 rounded-full h-1.5 ${
                     idx === currentSlide
-                      ? "w-7 bg-[#FF5A0A] shadow-sm shadow-[#FF5A0A]/50"
-                      : "w-2 bg-white/40 hover:bg-white/70"
+                      ? "w-6 bg-[#FF5A0A] shadow-sm shadow-[#FF5A0A]/50"
+                      : "w-1.5 bg-white/40 hover:bg-white/70"
                   }`}
                 />
               </button>
             ))}
           </div>
         </div>
+      </section>
+
+      {/* ========================================================
+          DESKTOP & TABLET VIEW (>= sm): Full-Bleed Stitch Banner
+          ======================================================== */}
+      <section
+        className="hidden sm:flex relative w-full min-h-[400px] lg:h-[420px] bg-[#1E110A] overflow-hidden items-center select-none"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        aria-label="Offers Carousel"
+      >
+        {/* Background Images with Smooth Crossfade */}
+        {OFFER_SLIDES.map((slide, index) => {
+          const isCurrent = index === currentSlide;
+          return (
+            <div
+              key={slide.id}
+              className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
+                isCurrent ? "opacity-100 z-0" : "opacity-0 pointer-events-none"
+              }`}
+              aria-hidden={!isCurrent}
+            >
+              <Image
+                src={slide.image}
+                alt={slide.headingLine1}
+                fill
+                priority={index === 0}
+                sizes="100vw"
+                className="object-cover object-center brightness-[0.93] transform scale-100 transition-transform duration-1000 ease-out"
+              />
+              {/* Cinematic Gradient Overlays for High Legibility */}
+              <div className="absolute inset-0 bg-gradient-to-r from-[#180C07]/95 via-[#180C07]/75 to-transparent w-2/3" />
+              <div className="absolute inset-0 bg-black/25" />
+            </div>
+          );
+        })}
+
+        {/* Offers Content Container */}
+        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full py-8 sm:py-10 flex flex-col justify-between h-full min-h-[400px] lg:h-[420px]">
+          {/* Dynamic Text Content */}
+          <div className="max-w-xl space-y-4 pt-4 transition-all duration-500">
+            {/* Small orange uppercase badge with simple clean timer */}
+            <div className="flex flex-wrap items-center gap-2 text-[11px] font-bold tracking-[0.18em] text-[#FF7A24] uppercase">
+              <span>{active.badge}</span>
+              <span className="text-white/30">•</span>
+              <span className="inline-flex items-center gap-1.5 text-white/90 normal-case font-medium tracking-normal text-xs">
+                <Clock className="w-3.5 h-3.5 text-[#FF5A0A]" />
+                <span>
+                  Ends in{" "}
+                  <strong className="text-white font-mono font-bold">
+                    {formatDigit(timeLeft.hours)}h {formatDigit(timeLeft.minutes)}m{" "}
+                    {formatDigit(timeLeft.seconds)}s
+                  </strong>
+                </span>
+              </span>
+            </div>
+
+            {/* Main Heading */}
+            <h1 className="text-4xl lg:text-[44px] font-extrabold tracking-tight leading-[1.12] text-white">
+              {active.headingLine1} <br />
+              <span className="text-[#FF5A0A]">{active.headingLine2}</span>
+            </h1>
+
+            {/* Description */}
+            <p className="text-sm text-gray-200/90 leading-relaxed max-w-md font-normal">
+              {active.description}
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex items-center gap-4 pt-2">
+              <button
+                onClick={() => handleApplySlideCoupon(active.couponCode)}
+                className="inline-flex items-center gap-2 bg-[#FF5A0A] hover:bg-[#E04E07] active:bg-[#C94304] text-white text-sm font-semibold px-6 py-3 rounded-xl transition-all shadow-md active:scale-95 group cursor-pointer"
+              >
+                <span>{active.primaryButtonText}</span>
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </button>
+
+              <button
+                onClick={handleScrollToOffers}
+                className="inline-flex items-center justify-center border border-white/60 bg-black/20 hover:bg-white/10 active:bg-white/20 text-white text-sm font-medium px-6 py-3 rounded-xl backdrop-blur-sm transition-all cursor-pointer"
+              >
+                {active.secondaryButtonText}
+              </button>
+            </div>
+          </div>
+
+          {/* Bottom Bar: Benefits + Carousel 5-Dots */}
+          <div className="pt-4 pb-2 border-t border-white/10 mt-auto flex items-center justify-between gap-3">
+            <HeroBenefits />
+
+            {/* Carousel Pagination Dots */}
+            <div className="flex items-center gap-2 z-20">
+              {OFFER_SLIDES.map((slide, idx) => (
+                <button
+                  key={slide.id}
+                  onClick={() => setCurrentSlide(idx)}
+                  aria-label={`Go to slide ${idx + 1}`}
+                  className="p-1.5 cursor-pointer flex items-center justify-center"
+                >
+                  <span
+                    className={`block transition-all duration-300 rounded-full h-2 ${
+                      idx === currentSlide
+                        ? "w-7 bg-[#FF5A0A] shadow-sm shadow-[#FF5A0A]/50"
+                        : "w-2 bg-white/40 hover:bg-white/70"
+                    }`}
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Prev / Next Navigation Arrows */}
+        <button
+          onClick={handlePrev}
+          aria-label="Previous slide"
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/30 hover:bg-black/60 text-white/80 hover:text-white backdrop-blur-sm flex items-center justify-center transition-all opacity-70 hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer"
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+
+        <button
+          onClick={handleNext}
+          aria-label="Next slide"
+          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/30 hover:bg-black/60 text-white/80 hover:text-white backdrop-blur-sm flex items-center justify-center transition-all opacity-70 hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
+      </section>
+
+      {/* Mobile Benefits Bar - Clean native app trust strip */}
+      <div className="sm:hidden bg-[#140A05] border-y border-white/10 px-4 py-2.5">
+        <HeroBenefits />
       </div>
-
-      {/* Prev / Next Navigation Arrows - Hidden on small mobile to maximize screen readability */}
-      <button
-        onClick={handlePrev}
-        aria-label="Previous slide"
-        className="hidden sm:flex absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/30 hover:bg-black/60 text-white/80 hover:text-white backdrop-blur-sm items-center justify-center transition-all opacity-70 hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer"
-      >
-        <ChevronLeft className="w-5 h-5" />
-      </button>
-
-      <button
-        onClick={handleNext}
-        aria-label="Next slide"
-        className="hidden sm:flex absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-black/30 hover:bg-black/60 text-white/80 hover:text-white backdrop-blur-sm items-center justify-center transition-all opacity-70 hover:opacity-100 hover:scale-105 active:scale-95 cursor-pointer"
-      >
-        <ChevronRight className="w-5 h-5" />
-      </button>
-    </section>
+    </div>
   );
 }
