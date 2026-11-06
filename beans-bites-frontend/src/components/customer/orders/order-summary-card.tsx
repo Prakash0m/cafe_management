@@ -4,10 +4,20 @@ import * as React from "react";
 import Image from "next/image";
 import { formatPrice } from "@/lib/utils";
 import { CartItem } from "@/types/cart.types";
+import { OrderItem } from "@/types/order.types";
 import { ASSETS } from "@/lib/assets";
 
+type DisplayableItem =
+  | OrderItem
+  | CartItem
+  | {
+      id: string;
+      item: { id: string; name: string; price: number; imageUrl?: string };
+      quantity: number;
+    };
+
 interface OrderSummaryCardProps {
-  items?: CartItem[];
+  items?: DisplayableItem[];
   totalItemCount?: number;
   subtotal?: number;
   discount?: number;
@@ -84,7 +94,10 @@ export function OrderSummaryCard({
       {/* Food Items List */}
       <div className="divide-y divide-gray-50">
         {displayItems.map((ci) => {
-          const itemTotal = ci.item.price * ci.quantity;
+          const name = "name" in ci && ci.name ? ci.name : "item" in ci ? ci.item.name : "Item";
+          const price = "price" in ci && typeof ci.price === "number" ? ci.price : "item" in ci ? ci.item.price : 0;
+          const imageUrl = "imageUrl" in ci && ci.imageUrl ? ci.imageUrl : "item" in ci && ci.item.imageUrl ? ci.item.imageUrl : ASSETS.food.pizza.margherita;
+          const itemTotal = price * ci.quantity;
 
           return (
             <div
@@ -95,8 +108,8 @@ export function OrderSummaryCard({
               <div className="flex items-center gap-3 min-w-0">
                 <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0 shadow-2xs">
                   <Image
-                    src={ci.item.imageUrl || ASSETS.food.pizza.margherita}
-                    alt={ci.item.name}
+                    src={imageUrl}
+                    alt={name}
                     fill
                     sizes="48px"
                     className="object-cover"
@@ -104,7 +117,7 @@ export function OrderSummaryCard({
                 </div>
                 <div className="min-w-0">
                   <h3 className="font-bold text-gray-900 text-xs sm:text-[13px] truncate">
-                    {ci.item.name}{" "}
+                    {name}{" "}
                     <span className="text-gray-500 font-semibold">
                       × {ci.quantity}
                     </span>
@@ -169,3 +182,4 @@ export function OrderSummaryCard({
     </div>
   );
 }
+

@@ -22,29 +22,45 @@ import { toast } from "sonner";
 interface OrderWhatsNextCardProps {
   orderId?: string;
   tableNumber?: string;
+  notificationsEnabled?: boolean;
+  onToggleNotifications?: () => void;
+  onOpenHistory?: () => void;
 }
 
 export function OrderWhatsNextCard({
   orderId = "#BB1048",
   tableNumber = "T4",
+  notificationsEnabled = true,
+  onToggleNotifications,
+  onOpenHistory,
 }: OrderWhatsNextCardProps) {
-  const [isUpdatesEnabled, setIsUpdatesEnabled] = React.useState(true);
+  const [internalUpdates, setInternalUpdates] = React.useState(notificationsEnabled);
+
+  const isUpdatesActive =
+    notificationsEnabled !== undefined ? notificationsEnabled : internalUpdates;
 
   const handleToggleUpdates = () => {
-    const nextState = !isUpdatesEnabled;
-    setIsUpdatesEnabled(nextState);
-    if (nextState) {
-      toast.success("Order notifications enabled!", {
-        description: `You will receive live sound and visual alerts when ${orderId} is ready.`,
-      });
+    if (onToggleNotifications) {
+      onToggleNotifications();
     } else {
-      toast.info("Order notifications muted");
+      const next = !internalUpdates;
+      setInternalUpdates(next);
+      if (next) {
+        toast.success("Order notifications enabled!", {
+          description: `You will receive live sound and visual alerts when ${orderId} is ready.`,
+        });
+      } else {
+        toast.info("Order notifications muted");
+      }
     }
   };
 
+  const cleanTable = tableNumber.replace(/^Table\s*/i, "").split(" ")[0] || "";
+  const continueOrderHref = cleanTable ? `/table/${cleanTable}` : "/menu";
+
   const handleNeedAssistance = () => {
     toast.info("Staff Assistance Requested", {
-      description: `A waiter has been notified for ${tableNumber}. Someone will arrive shortly!`,
+      description: `A waiter has been alerted for ${cleanTable ? `Table ${cleanTable}` : "your order"}. Someone will assist you shortly!`,
       duration: 3500,
     });
   };
@@ -100,17 +116,17 @@ export function OrderWhatsNextCard({
           <button
             type="button"
             role="switch"
-            aria-checked={isUpdatesEnabled}
+            aria-checked={isUpdatesActive}
             onClick={handleToggleUpdates}
             className={cn(
               "w-11 h-6 rounded-full transition-colors relative flex-shrink-0 cursor-pointer p-0.5",
-              isUpdatesEnabled ? "bg-[#22C55E]" : "bg-gray-300"
+              isUpdatesActive ? "bg-[#22C55E]" : "bg-gray-300"
             )}
           >
             <span
               className={cn(
                 "w-5 h-5 rounded-full bg-white shadow-sm block transition-transform duration-200",
-                isUpdatesEnabled ? "translate-x-5" : "translate-x-0"
+                isUpdatesActive ? "translate-x-5" : "translate-x-0"
               )}
             />
           </button>
@@ -119,23 +135,44 @@ export function OrderWhatsNextCard({
         <div className="border-t border-gray-100" />
 
         {/* Action Row 2: View My Orders */}
-        <Link
-          href="/orders"
-          className="flex items-center justify-between gap-3 group transition-colors"
-        >
-          <div className="flex items-start gap-2.5 min-w-0">
-            <ReceiptText className="w-5 h-5 text-[#FF5A0A] stroke-[2.2] flex-shrink-0 mt-0.5" />
-            <div className="min-w-0">
-              <span className="font-bold text-gray-900 group-hover:text-[#FF5A0A] text-xs sm:text-sm block leading-tight transition-colors">
-                View My Orders
-              </span>
-              <span className="text-[11px] text-gray-500 block leading-tight mt-0.5">
-                Check current and past orders
-              </span>
+        {onOpenHistory ? (
+          <button
+            type="button"
+            onClick={onOpenHistory}
+            className="w-full flex items-center justify-between gap-3 group text-left transition-colors cursor-pointer"
+          >
+            <div className="flex items-start gap-2.5 min-w-0">
+              <ReceiptText className="w-5 h-5 text-[#FF5A0A] stroke-[2.2] flex-shrink-0 mt-0.5" />
+              <div className="min-w-0">
+                <span className="font-bold text-gray-900 group-hover:text-[#FF5A0A] text-xs sm:text-sm block leading-tight transition-colors">
+                  View My Orders
+                </span>
+                <span className="text-[11px] text-gray-500 block leading-tight mt-0.5">
+                  Check current and past orders
+                </span>
+              </div>
             </div>
-          </div>
-          <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-[#FF5A0A] group-hover:translate-x-0.5 transition-all flex-shrink-0" />
-        </Link>
+            <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-[#FF5A0A] group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+          </button>
+        ) : (
+          <Link
+            href="/orders"
+            className="flex items-center justify-between gap-3 group transition-colors"
+          >
+            <div className="flex items-start gap-2.5 min-w-0">
+              <ReceiptText className="w-5 h-5 text-[#FF5A0A] stroke-[2.2] flex-shrink-0 mt-0.5" />
+              <div className="min-w-0">
+                <span className="font-bold text-gray-900 group-hover:text-[#FF5A0A] text-xs sm:text-sm block leading-tight transition-colors">
+                  View My Orders
+                </span>
+                <span className="text-[11px] text-gray-500 block leading-tight mt-0.5">
+                  Check current and past orders
+                </span>
+              </div>
+            </div>
+            <ChevronRight className="w-4 h-4 text-gray-400 group-hover:text-[#FF5A0A] group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+          </Link>
+        )}
 
         <div className="border-t border-gray-100" />
 
@@ -173,7 +210,7 @@ export function OrderWhatsNextCard({
 
         {/* Continue Ordering Button */}
         <Link
-          href="/menu"
+          href={continueOrderHref}
           className="w-full bg-white hover:bg-gray-50 active:bg-gray-100 active:scale-[0.99] border border-gray-200 text-gray-800 font-bold py-3.5 px-6 rounded-2xl flex items-center justify-center gap-2 shadow-2xs text-xs sm:text-sm transition-all"
         >
           <UtensilsCrossed className="w-4 h-4 text-gray-700" />
@@ -183,3 +220,4 @@ export function OrderWhatsNextCard({
     </div>
   );
 }
+

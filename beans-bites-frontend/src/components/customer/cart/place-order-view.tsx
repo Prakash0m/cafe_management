@@ -4,6 +4,7 @@ import * as React from "react";
 import Image from "next/image";
 import { ArrowLeft, UtensilsCrossed } from "lucide-react";
 import { useCartStore } from "@/store/cart.store";
+import { useOrdersStore } from "@/store/orders.store";
 import { ASSETS } from "@/lib/assets";
 import { OrderTypeSelector } from "./order-type-selector";
 import { TableSelector } from "./table-selector";
@@ -22,14 +23,44 @@ export function PlaceOrderView({
   onBackToCart,
   compact = false,
 }: PlaceOrderViewProps) {
-  const { items, getTotalPayable } = useCartStore();
+  const cartStore = useCartStore();
+  const { items } = cartStore;
+  const { addOrder } = useOrdersStore();
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [orderNumber, setOrderNumber] = React.useState("#BB-8492");
 
   const handlePlaceOrder = () => {
     // Generate order ID
     const randomDigits = Math.floor(1000 + Math.random() * 9000);
-    setOrderNumber(`#BB-${randomDigits}`);
+    const newId = `BB${randomDigits}`;
+    setOrderNumber(`#${newId}`);
+
+    // Save to Orders store before clearing cart
+    addOrder({
+      id: newId,
+      items: cartStore.items.map((ci) => ({
+        id: ci.id,
+        name: ci.item.name,
+        price: ci.item.price,
+        quantity: ci.quantity,
+        imageUrl: ci.item.imageUrl || "",
+      })),
+      subtotal: cartStore.getSubtotal(),
+      discount: cartStore.getDiscountAmount(),
+      discountCode: cartStore.appliedCoupon
+        ? `${cartStore.appliedCoupon.code} - ${cartStore.appliedCoupon.discountPercentage}%`
+        : undefined,
+      serviceCharge: cartStore.getServiceCharge(),
+      vat: cartStore.getVat(),
+      totalPaid: cartStore.getTotalPayable(),
+      orderType: cartStore.orderType,
+      tableNumber: cartStore.tableNumber || "Table T4 (4 Seats)",
+      paymentMethod: cartStore.paymentMethod,
+      specialInstructions: cartStore.specialInstructions,
+      customerName: "Pankaj",
+      status: "preparing",
+    });
+
     setIsModalOpen(true);
   };
 

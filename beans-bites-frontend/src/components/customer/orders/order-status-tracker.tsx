@@ -7,23 +7,25 @@ import { cn } from "@/lib/utils";
 interface OrderStatusTrackerProps {
   currentStage?: "placed" | "preparing" | "ready" | "completed";
   placedTime?: string;
+  onStageChange?: (stage: "placed" | "preparing" | "ready" | "completed") => void;
 }
 
 export function OrderStatusTracker({
   currentStage = "preparing",
   placedTime = "10:24 AM",
+  onStageChange,
 }: OrderStatusTrackerProps) {
   const steps = [
     {
-      id: "placed",
+      id: "placed" as const,
       title: "Order Placed",
       subtext: placedTime,
       icon: Check,
-      isCompleted: true,
-      isActive: false,
+      isCompleted: currentStage !== "placed",
+      isActive: currentStage === "placed",
     },
     {
-      id: "preparing",
+      id: "preparing" as const,
       title: "Preparing",
       subtext: "In the kitchen",
       icon: ChefHat,
@@ -31,7 +33,7 @@ export function OrderStatusTracker({
       isActive: currentStage === "preparing",
     },
     {
-      id: "ready",
+      id: "ready" as const,
       title: "Ready",
       subtext: "For serving",
       icon: (props: { className?: string }) => (
@@ -52,12 +54,12 @@ export function OrderStatusTracker({
       isActive: currentStage === "ready",
     },
     {
-      id: "completed",
+      id: "completed" as const,
       title: "Completed",
       subtext: "Enjoy your meal",
       icon: Check,
       isCompleted: currentStage === "completed",
-      isActive: false,
+      isActive: currentStage === "completed",
     },
   ];
 
@@ -83,7 +85,12 @@ export function OrderStatusTracker({
           return (
             <div
               key={s.id}
-              className="flex flex-col items-center text-center relative z-10 w-1/4"
+              onClick={() => onStageChange?.(s.id)}
+              className={cn(
+                "flex flex-col items-center text-center relative z-10 w-1/4 select-none",
+                onStageChange && "cursor-pointer group"
+              )}
+              title={onStageChange ? `Click to switch status to "${s.title}"` : undefined}
             >
               {/* Node Icon Circle */}
               <div
@@ -93,7 +100,8 @@ export function OrderStatusTracker({
                     ? "bg-[#22C55E] text-white shadow-sm ring-4 ring-white"
                     : s.isActive
                     ? "bg-[#22C55E] text-white shadow-md ring-4 ring-emerald-100 scale-105"
-                    : "bg-white text-gray-400 border border-gray-300 ring-4 ring-white"
+                    : "bg-white text-gray-400 border border-gray-300 ring-4 ring-white",
+                  onStageChange && "group-hover:scale-110"
                 )}
               >
                 <Icon

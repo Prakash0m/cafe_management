@@ -3,8 +3,9 @@
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ShoppingBag, ShieldCheck } from "lucide-react";
+import { ArrowLeft, ShoppingBag, ShieldCheck, Receipt } from "lucide-react";
 import { ASSETS } from "@/lib/assets";
+import { useOrdersStore } from "@/store/orders.store";
 
 interface TableHeaderProps {
   tableNumber: string;
@@ -15,6 +16,14 @@ export function TableHeader({
   tableNumber,
   totalCartItems,
 }: TableHeaderProps) {
+  const { orders } = useOrdersStore();
+  const cleanTable = tableNumber.replace(/^Table\s*/i, "").split(" ")[0] || "";
+
+  const activeTableOrder = orders.find(
+    (o) =>
+      o.cleanTableNumber?.toLowerCase() === cleanTable.toLowerCase() &&
+      (o.status === "placed" || o.status === "preparing" || o.status === "ready")
+  );
   return (
     <header className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-2xs transition-all">
       <div className="max-w-2xl mx-auto px-4 py-2.5 flex items-center justify-between gap-3">
@@ -46,10 +55,20 @@ export function TableHeader({
 
         {/* Right: Verified Dine-In & Direct Cart Shortcut */}
         <div className="flex items-center gap-2 flex-shrink-0">
-          <div className="hidden sm:inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-[11px] font-bold px-2 py-1 rounded-xl">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>Table Connected</span>
-          </div>
+          {activeTableOrder ? (
+            <Link
+              href={`/orders?id=${activeTableOrder.id}`}
+              className="inline-flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 text-[11px] font-bold px-2.5 py-1 rounded-xl transition-colors shadow-2xs"
+            >
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Track {activeTableOrder.displayId}</span>
+            </Link>
+          ) : (
+            <div className="hidden sm:inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-[11px] font-bold px-2 py-1 rounded-xl">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>Table Connected</span>
+            </div>
+          )}
 
           <Link
             href="/cart?step=checkout"

@@ -2,8 +2,10 @@
 
 import * as React from "react";
 import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
 import { FoodItem } from "@/types/menu.types";
 import { useCartStore } from "@/store/cart.store";
+import { useOrdersStore } from "@/store/orders.store";
 import { TableHeader } from "@/components/customer/table/table-header";
 import { TableCategoryStrip } from "@/components/customer/table/table-category-strip";
 import { TableFoodListItem } from "@/components/customer/table/table-food-list-item";
@@ -160,6 +162,14 @@ export default function TableMenuPage() {
   const totalItems = getTotalItems();
   const totalPayable = getTotalPayable();
 
+  const { orders } = useOrdersStore();
+  const activeTableOrder = orders.find(
+    (o) =>
+      (o.cleanTableNumber?.toLowerCase() === `t${tableDigits}`.toLowerCase() ||
+        o.cleanTableNumber?.toLowerCase() === tableDigits.toLowerCase()) &&
+      (o.status === "placed" || o.status === "preparing" || o.status === "ready")
+  );
+
   return (
     <div className="min-h-screen bg-[#FAF9F6] pb-28">
       {/* 1. Header with Table Badge */}
@@ -167,6 +177,33 @@ export default function TableMenuPage() {
         tableNumber={formattedTable}
         totalCartItems={totalItems}
       />
+
+      {/* Active Table Order Live Banner */}
+      {activeTableOrder && (
+        <div className="max-w-2xl mx-auto px-4 pt-3">
+          <Link
+            href={`/orders?id=${activeTableOrder.id}`}
+            className="flex items-center justify-between p-3 bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white rounded-2xl shadow-sm hover:shadow-md transition-all group"
+          >
+            <div className="flex items-center gap-2.5">
+              <span className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center text-white text-base">
+                👨‍🍳
+              </span>
+              <div>
+                <span className="text-xs font-black block leading-tight">
+                  Order {activeTableOrder.displayId} is in the Kitchen!
+                </span>
+                <span className="text-[11px] text-white/80 font-medium block">
+                  Table T{tableDigits} • Tap to view live status & bill
+                </span>
+              </div>
+            </div>
+            <span className="text-xs font-bold bg-white text-emerald-900 px-3 py-1.5 rounded-xl shadow-xs group-hover:scale-105 transition-transform flex items-center gap-1">
+              Track Order →
+            </span>
+          </Link>
+        </div>
+      )}
 
       {/* 2. Horizontal Category Strip + Search Bar */}
       <TableCategoryStrip

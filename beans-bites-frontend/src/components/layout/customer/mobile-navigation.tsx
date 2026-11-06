@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 import { ASSETS } from "@/lib/assets";
 import { SearchBar } from "./search-bar";
 import { useCartStore } from "@/store/cart.store";
+import { useOrdersStore } from "@/store/orders.store";
 
 interface MobileNavigationProps {
   isOpen: boolean;
@@ -42,6 +43,10 @@ export function MobileNavigation({
 }: MobileNavigationProps) {
   const pathname = usePathname();
   const totalCartItems = useCartStore((state) => state.getTotalItems());
+  const { orders } = useOrdersStore();
+  const hasLiveOrder = orders.some(
+    (o) => o.status === "preparing" || o.status === "ready"
+  );
 
   // Prevent background scroll when mobile menu is open
   React.useEffect(() => {
@@ -127,6 +132,12 @@ export function MobileNavigation({
                   )}
                 />
                 <span>{item.label}</span>
+                {item.label === "Orders" && hasLiveOrder && (
+                  <span className="ml-auto inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    <span>Live</span>
+                  </span>
+                )}
               </Link>
             );
           })}

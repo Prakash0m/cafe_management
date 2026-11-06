@@ -116,6 +116,23 @@ export function CustomerFooter() {
               </li>
               <li>
                 <Link
+                  href="/orders"
+                  className="hover:text-[#FF7A24] transition-colors inline-flex items-center gap-1.5"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  <span>My Orders & Live Tracking</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/table/T4"
+                  className="hover:text-[#FF7A24] transition-colors"
+                >
+                  Dine-In Table Menu (QR)
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/contact"
                   className="hover:text-[#FF7A24] transition-colors"
                 >

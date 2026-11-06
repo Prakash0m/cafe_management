@@ -1,36 +1,50 @@
 "use client";
 
 import * as React from "react";
-import { useSearchParams } from "next/navigation";
-import { useCartStore } from "@/store/cart.store";
+import { useSearchParams, useParams, useRouter } from "next/navigation";
+import { useOrdersStore, DEFAULT_REFERENCE_ORDER } from "@/store/orders.store";
 import { OrderSuccessHero } from "@/components/customer/orders/order-success-hero";
 import { OrderMetaBanner } from "@/components/customer/orders/order-meta-banner";
 import { OrderStatusTracker } from "@/components/customer/orders/order-status-tracker";
 import { OrderSummaryCard } from "@/components/customer/orders/order-summary-card";
 import { OrderWhatsNextCard } from "@/components/customer/orders/order-whats-next-card";
+import { OrdersHistoryModal } from "@/components/customer/orders/orders-history-modal";
+import { CafeOrder } from "@/types/order.types";
 
 function OrdersPageContent() {
   const searchParams = useSearchParams();
-  const { items, tableNumber, orderType, appliedCoupon } = useCartStore();
+  const params = useParams();
+  const router = useRouter();
+  const {
+    getOrderById,
+    getActiveOrder,
+    setActiveOrder,
+    updateOrderStatus,
+    toggleOrderNotifications,
+  } = useOrdersStore();
 
   const [mounted, setMounted] = React.useState(false);
+  const [isHistoryOpen, setIsHistoryOpen] = React.useState(false);
+
   React.useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Use URL order ID or fallback to stitch reference #BB1048
-  const paramOrderId = searchParams.get("id");
-  const orderId = paramOrderId ? `#${paramOrderId.replace(/^#/, "")}` : "#BB1048";
+  // Look up order based on URL query `?id=...` or route param `/orders/[orderId]`
+  const rawId = (params?.orderId as string) || searchParams.get("id");
+  const paramOrderId = rawId ? rawId.replace(/^#/, "").trim() : undefined;
+  const order: CafeOrder = React.useMemo(() => {
+    if (paramOrderId) {
+      const found = getOrderById(paramOrderId);
+      if (found) return found;
+    }
+    return getActiveOrder() || DEFAULT_REFERENCE_ORDER;
+  }, [paramOrderId, getOrderById, getActiveOrder]);
 
-  // Use table number from store or fallback to T4
-  const displayTable = tableNumber ? tableNumber.split(" ")[0].replace(/^Table\s*/i, "") : "T4";
-  const displayOrderType = orderType ? (orderType === "dine-in" ? "Dine-in" : orderType) : "Dine-in";
-
-  // Live timestamp
-  const placedTime = React.useMemo(() => {
-    const d = new Date();
-    return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  }, []);
+  const handleSelectOrderFromHistory = (selected: CafeOrder) => {
+    setActiveOrder(selected.id);
+    router.push(`/orders?id=${selected.id}`, { scroll: false });
+  };
 
   if (!mounted) {
     return (
@@ -51,38 +65,52 @@ function OrdersPageContent() {
 
             {/* 2. Order ID, Order Type & Table Pill Banner */}
             <OrderMetaBanner
-              orderId={orderId}
-              orderType={displayOrderType}
-              tableNumber={displayTable}
+              orderId={order.displayId}
+              orderType={order.orderType === "dine-in" ? "Dine-in" : order.orderType}
+              tableNumber={order.cleanTableNumber || "T4"}
             />
 
             {/* 3. 4-Stage Status Stepper Tracker */}
             <OrderStatusTracker
-              currentStage="preparing"
-              placedTime={placedTime || "10:24 AM"}
+              currentStage={
+                order.status === "cancelled" ? "preparing" : order.status
+              }
+              placedTime={order.placedTime || "10:24 AM"}
+              onStageChange={(stage) => updateOrderStatus(order.id, stage)}
             />
 
             {/* 4. Detailed Order Summary Card */}
             <OrderSummaryCard
-              items={items.length > 0 ? items : undefined}
-              subtotal={1420}
-              discount={284}
-              discountCode={appliedCoupon ? `${appliedCoupon.code} - ${appliedCoupon.discountPercentage}%` : "WEEKEND20 - 20%"}
-              serviceCharge={57}
-              vat={148}
-              totalPaid={1341}
+              items={order.items}
+              totalItemCount={order.itemCount}
+              subtotal={order.subtotal}
+              discount={order.discount}
+              discountCode={order.discountCode || "WEEKEND20 - 20%"}
+              serviceCharge={order.serviceCharge}
+              vat={order.vat}
+              totalPaid={order.totalPaid}
             />
           </div>
 
           {/* RIGHT COLUMN: Cafe Interior Neon Photo & What's Next Action Card */}
           <div className="lg:col-span-5 pt-2 lg:pt-4">
             <OrderWhatsNextCard
-              orderId={orderId}
-              tableNumber={displayTable}
+              orderId={order.displayId}
+              tableNumber={order.cleanTableNumber || "T4"}
+              notificationsEnabled={order.notificationsEnabled}
+              onToggleNotifications={() => toggleOrderNotifications(order.id)}
+              onOpenHistory={() => setIsHistoryOpen(true)}
             />
           </div>
         </div>
       </div>
+
+      {/* Orders History Drawer / Modal */}
+      <OrdersHistoryModal
+        isOpen={isHistoryOpen}
+        onClose={() => setIsHistoryOpen(false)}
+        onSelectOrder={handleSelectOrderFromHistory}
+      />
     </div>
   );
 }

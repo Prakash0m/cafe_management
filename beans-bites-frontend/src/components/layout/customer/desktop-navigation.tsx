@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, UtensilsCrossed, Tag, Info, Phone, ClipboardList } from "lucide-react";
+import { useOrdersStore } from "@/store/orders.store";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
@@ -17,6 +18,11 @@ const NAV_ITEMS = [
 
 export function DesktopNavigation({ className }: { className?: string }) {
   const pathname = usePathname();
+  const { orders } = useOrdersStore();
+
+  const hasLiveOrder = orders.some(
+    (o) => o.status === "preparing" || o.status === "ready"
+  );
 
   return (
     <nav className={cn("hidden md:flex items-center gap-1.5 lg:gap-2.5", className)}>
@@ -24,13 +30,14 @@ export function DesktopNavigation({ className }: { className?: string }) {
         const Icon = item.icon;
         const isActive =
           item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+        const isOrders = item.label === "Orders";
 
         return (
           <Link
             key={item.href}
             href={item.href}
             className={cn(
-              "flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs lg:text-[13px] font-medium transition-all duration-150 select-none",
+              "relative flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs lg:text-[13px] font-medium transition-all duration-150 select-none",
               isActive
                 ? "bg-[#FF5A0A] text-white shadow-sm font-semibold"
                 : "text-gray-700 hover:text-[#FF5A0A] hover:bg-orange-50/60"
@@ -43,6 +50,9 @@ export function DesktopNavigation({ className }: { className?: string }) {
               )}
             />
             <span>{item.label}</span>
+            {isOrders && hasLiveOrder && (
+              <span className="w-2 h-2 rounded-full bg-emerald-400 ring-2 ring-white/50 animate-pulse" />
+            )}
           </Link>
         );
       })}
