@@ -36,19 +36,19 @@ export function WeekendPromotion({ promotion }: WeekendPromotionProps) {
           <div className="absolute -bottom-10 right-40 w-48 h-48 bg-black/10 rounded-full blur-xl pointer-events-none" />
 
           {/* LEFT SECTION: Icon + Discount Heading */}
-          <div className="p-4 sm:p-6 lg:p-7 flex items-center gap-3 sm:gap-4 z-10 w-full md:w-auto">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center flex-shrink-0 shadow-inner">
-              <TicketPercent className="w-5 h-5 sm:w-6 sm:h-6 text-white stroke-[2.2]" />
+          <div className="p-3.5 sm:p-6 lg:p-7 flex items-center gap-2.5 sm:gap-4 z-10 w-full md:w-auto">
+            <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center flex-shrink-0 shadow-inner">
+              <TicketPercent className="w-4 h-4 sm:w-6 sm:h-6 text-white stroke-[2.2]" />
             </div>
-            <div>
-              <span className="text-[11px] sm:text-xs font-semibold tracking-wider uppercase text-white/90 block">
+            <div className="min-w-0">
+              <span className="text-[10px] sm:text-xs font-semibold tracking-wider uppercase text-white/90 block truncate">
                 {promotion.title}
               </span>
-              <div className="flex items-baseline gap-2">
-                <span className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-white leading-none">
+              <div className="flex items-baseline gap-1.5 sm:gap-2 flex-wrap">
+                <span className="text-xl sm:text-3xl lg:text-4xl font-black tracking-tight text-white leading-none">
                   {promotion.discount}
                 </span>
-                <span className="text-xs sm:text-sm font-medium text-white/95">
+                <span className="text-[11px] sm:text-sm font-medium text-white/95">
                   {promotion.description}
                 </span>
               </div>
@@ -56,14 +56,14 @@ export function WeekendPromotion({ promotion }: WeekendPromotionProps) {
           </div>
 
           {/* MIDDLE SECTION: Coupon Code Pill & Copy Button */}
-          <div className="px-4 pb-4 md:pb-0 md:px-4 z-10 flex flex-col items-start md:items-center justify-center gap-1 w-full md:w-auto">
+          <div className="px-3.5 pb-3 md:pb-0 md:px-4 z-10 flex flex-row md:flex-col items-center justify-between md:justify-center gap-2 w-full md:w-auto border-t md:border-t-0 border-white/10 pt-2.5 md:pt-0">
             <div className="flex items-center gap-2">
               <span className="text-xs text-white/90 font-medium">
                 Use Code:
               </span>
               <button
                 onClick={handleCopyCode}
-                className="group inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 border border-white/40 active:scale-95 px-3 py-1.5 rounded-lg backdrop-blur-md text-xs sm:text-sm font-bold tracking-wider text-white transition-all shadow-sm"
+                className="group inline-flex items-center gap-1.5 bg-white/20 hover:bg-white/30 border border-white/40 active:scale-95 px-2.5 py-1 rounded-lg backdrop-blur-md text-xs sm:text-sm font-bold tracking-wider text-white transition-all shadow-sm cursor-pointer"
                 aria-label="Copy coupon code"
               >
                 <span>{promotion.couponCode}</span>
@@ -80,7 +80,7 @@ export function WeekendPromotion({ promotion }: WeekendPromotionProps) {
           </div>
 
           {/* RIGHT SECTION: Pizza Photography */}
-          <div className="relative w-full md:w-72 lg:w-80 h-28 sm:h-32 md:h-full min-h-[110px] sm:min-h-[120px] flex-shrink-0 overflow-hidden">
+          <div className="relative w-full md:w-72 lg:w-80 h-20 sm:h-32 md:h-full min-h-[90px] sm:min-h-[120px] flex-shrink-0 overflow-hidden">
             <Image
               src={promotion.bannerImageUrl}
               alt="Weekend Pizza Special"

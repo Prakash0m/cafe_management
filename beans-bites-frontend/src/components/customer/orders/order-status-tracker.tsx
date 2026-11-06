@@ -113,16 +113,16 @@ export function OrderStatusTracker({
               </div>
 
               {/* Title & Subtext */}
-              <div className="mt-2.5 space-y-0.5">
+              <div className="mt-2 sm:mt-2.5 space-y-0.5 px-0.5">
                 <span
                   className={cn(
-                    "text-xs sm:text-[13px] font-bold block leading-tight tracking-tight",
+                    "text-[10.5px] sm:text-[13px] font-bold block leading-tight tracking-tight",
                     s.isCompleted || s.isActive ? "text-gray-900" : "text-gray-400"
                   )}
                 >
                   {s.title}
                 </span>
-                <span className="text-[10px] sm:text-[11px] font-medium text-gray-400 block leading-tight">
+                <span className="text-[9.5px] sm:text-[11px] font-medium text-gray-400 block leading-tight">
                   {s.subtext}
                 </span>
               </div>

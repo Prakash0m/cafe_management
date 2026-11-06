@@ -55,7 +55,7 @@ function OrdersPageContent() {
   }
 
   return (
-    <div className="min-h-screen bg-[#FBF7F4] py-6 sm:py-10 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#FBF7F4] py-4 sm:py-10 px-3 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           {/* LEFT COLUMN: Success Hero, Meta Pill, Status Stepper & Order Summary */}

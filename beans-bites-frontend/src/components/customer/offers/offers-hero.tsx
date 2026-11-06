@@ -120,16 +120,40 @@ export function OffersHero() {
     return () => clearInterval(timer);
   }, [isPaused]);
 
-  const handlePrev = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handlePrev = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
     setCurrentSlide(
       (prev) => (prev - 1 + OFFER_SLIDES.length) % OFFER_SLIDES.length
     );
   };
 
-  const handleNext = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleNext = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
     setCurrentSlide((prev) => (prev + 1) % OFFER_SLIDES.length);
+  };
+
+  // Touch Swipe Handling for Native-feel mobile swiping
+  const touchStartX = React.useRef(0);
+  const touchEndX = React.useRef(0);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchEndX.current = e.touches[0].clientX;
+    setIsPaused(true);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const diff = touchStartX.current - touchEndX.current;
+    if (diff > 45) {
+      handleNext();
+    } else if (diff < -45) {
+      handlePrev();
+    }
+    setIsPaused(false);
   };
 
   const handleApplySlideCoupon = (code: string) => {
@@ -163,9 +187,12 @@ export function OffersHero() {
 
   return (
     <section
-      className="relative w-full min-h-[380px] sm:min-h-[400px] lg:h-[420px] bg-[#1E110A] overflow-hidden flex items-center select-none"
+      className="relative w-full min-h-[380px] sm:min-h-[400px] lg:h-[420px] bg-[#1E110A] overflow-hidden flex items-center select-none touch-pan-y"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
       aria-label="Offers Carousel"
     >
       {/* 5 Background Images with Smooth Crossfade & Auto-rotation */}
@@ -255,12 +282,16 @@ export function OffersHero() {
                 key={slide.id}
                 onClick={() => setCurrentSlide(idx)}
                 aria-label={`Go to slide ${idx + 1}`}
-                className={`transition-all duration-300 rounded-full h-2 cursor-pointer ${
-                  idx === currentSlide
-                    ? "w-7 bg-[#FF5A0A] shadow-sm shadow-[#FF5A0A]/50"
-                    : "w-2 bg-white/40 hover:bg-white/70"
-                }`}
-              />
+                className="p-1.5 cursor-pointer flex items-center justify-center"
+              >
+                <span
+                  className={`block transition-all duration-300 rounded-full h-2 ${
+                    idx === currentSlide
+                      ? "w-7 bg-[#FF5A0A] shadow-sm shadow-[#FF5A0A]/50"
+                      : "w-2 bg-white/40 hover:bg-white/70"
+                  }`}
+                />
+              </button>
             ))}
           </div>
         </div>
