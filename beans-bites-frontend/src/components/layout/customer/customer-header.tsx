@@ -107,7 +107,7 @@ export function CustomerHeader() {
               className="inline-flex items-center gap-1.5 bg-[#FF5A0A] hover:bg-[#E04E07] active:bg-[#C94304] text-white text-xs sm:text-[13px] font-semibold px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl transition-all shadow-xs active:scale-95 cursor-pointer"
             >
               <User className="w-3.5 h-3.5" />
-              <span>Pankaj</span>
+              <span>Account</span>
               <ChevronDown
                 className={`w-3 h-3 text-white/80 transition-transform duration-200 ${
                   isProfileMenuOpen ? "rotate-180" : ""
@@ -122,14 +122,14 @@ export function CustomerHeader() {
                 <div className="p-3 bg-gradient-to-r from-orange-50/80 to-amber-50/40 rounded-xl mb-2">
                   <div className="flex items-center gap-2.5">
                     <div className="w-9 h-9 rounded-full bg-[#FF5A0A] text-white font-bold text-sm flex items-center justify-center shadow-xs">
-                      P
+                      <User className="w-4 h-4 text-white" />
                     </div>
                     <div className="min-w-0">
                       <span className="font-extrabold text-sm text-gray-900 block truncate">
-                        Pankaj Sharma
+                        Customer Account
                       </span>
                       <span className="text-[11px] text-gray-500 block truncate">
-                        +977 9801234567 • Dine-in Guest
+                        Beans & Bites • Dine-in Guest
                       </span>
                     </div>
                   </div>

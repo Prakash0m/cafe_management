@@ -45,7 +45,7 @@ export const DEFAULT_REFERENCE_ORDER: CafeOrder = {
   totalPaid: 1341,
   paymentMethod: "cash",
   specialInstructions: "Extra napkins and served hot please.",
-  customerName: "Pankaj",
+  customerName: "Guest Customer",
   notificationsEnabled: true,
 };
 
@@ -114,7 +114,7 @@ export const useOrdersStore = create<OrdersState>()(
           totalPaid: partial.totalPaid || 0,
           paymentMethod: partial.paymentMethod || "cash",
           specialInstructions: partial.specialInstructions || "",
-          customerName: partial.customerName || "Pankaj",
+          customerName: partial.customerName || "Guest Customer",
           notificationsEnabled:
             partial.notificationsEnabled !== undefined
               ? partial.notificationsEnabled

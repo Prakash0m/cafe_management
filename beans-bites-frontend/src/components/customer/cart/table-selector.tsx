@@ -17,7 +17,7 @@ const TABLES = [
 export function TableSelector() {
   const { orderType, tableNumber, setTableNumber } = useCartStore();
   const [isOpen, setIsOpen] = React.useState(false);
-  const [takeawayName, setTakeawayName] = React.useState("Prakash Sharma");
+  const [takeawayName, setTakeawayName] = React.useState("");
   const [deliveryAddress, setDeliveryAddress] = React.useState("Kathmandu, Ward 4");
 
   const dropdownRef = React.useRef<HTMLDivElement>(null);

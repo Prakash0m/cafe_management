@@ -34,3 +34,4 @@ export interface CafeOrder {
   customerName: string;
   notificationsEnabled: boolean;
 }
+

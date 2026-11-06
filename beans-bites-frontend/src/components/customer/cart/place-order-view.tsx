@@ -57,7 +57,7 @@ export function PlaceOrderView({
       tableNumber: cartStore.tableNumber || "Table T4 (4 Seats)",
       paymentMethod: cartStore.paymentMethod,
       specialInstructions: cartStore.specialInstructions,
-      customerName: "Pankaj",
+      customerName: "Customer",
       status: "preparing",
     });
 
