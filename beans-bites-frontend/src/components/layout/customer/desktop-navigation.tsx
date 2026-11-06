@@ -3,13 +3,14 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, UtensilsCrossed, Tag, Info, Phone } from "lucide-react";
+import { Home, UtensilsCrossed, Tag, Info, Phone, ClipboardList } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
   { label: "Home", href: "/", icon: Home },
   { label: "Menu", href: "/menu", icon: UtensilsCrossed },
   { label: "Offers", href: "/offers", icon: Tag },
+  { label: "Orders", href: "/orders", icon: ClipboardList },
   { label: "About", href: "/about", icon: Info },
   { label: "Contact", href: "/contact", icon: Phone },
 ];

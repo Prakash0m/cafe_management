@@ -57,6 +57,7 @@ export const ASSETS = {
   },
   promotions: {
     weekendSpecial: "/assets/promotions/weekend-special.webp",
+    cafeInterior: "/assets/promotions/cafe-interior-neon.webp",
   },
 } as const;
 

@@ -160,7 +160,7 @@ export function OrderSuccessModal({
           </Link>
 
           <Link
-            href="/orders"
+            href={`/orders?id=${orderNumber.replace('#', '')}`}
             onClick={handleFinish}
             className="flex-1 py-3 px-4 rounded-xl bg-[#FF5A0A] hover:bg-[#E04E07] text-white text-center font-bold text-xs sm:text-sm transition-all shadow-md shadow-orange-500/20 inline-flex items-center justify-center gap-1.5"
           >

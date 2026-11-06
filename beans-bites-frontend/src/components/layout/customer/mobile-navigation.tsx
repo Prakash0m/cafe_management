@@ -13,6 +13,7 @@ import {
   X,
   User,
   ShoppingBag,
+  ClipboardList,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { ASSETS } from "@/lib/assets";
@@ -29,6 +30,7 @@ const NAV_ITEMS = [
   { label: "Home", href: "/", icon: Home },
   { label: "Menu", href: "/menu", icon: UtensilsCrossed },
   { label: "Offers", href: "/offers", icon: Tag },
+  { label: "Orders", href: "/orders", icon: ClipboardList },
   { label: "About", href: "/about", icon: Info },
   { label: "Contact", href: "/contact", icon: Phone },
 ];

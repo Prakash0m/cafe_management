@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingCart, User, Menu } from "lucide-react";
+import { ShoppingCart, User, Menu, ChevronDown } from "lucide-react";
 import { ASSETS } from "@/lib/assets";
 import { DesktopNavigation } from "./desktop-navigation";
 import { MobileNavigation } from "./mobile-navigation";
@@ -83,13 +83,14 @@ export function CustomerHeader() {
             )}
           </Link>
 
-          {/* Orange Login Button */}
+          {/* User Profile Button */}
           <button
             onClick={handleLoginClick}
-            className="hidden sm:inline-flex items-center gap-1.5 bg-[#FF5A0A] hover:bg-[#E04E07] active:bg-[#C94304] text-white text-xs sm:text-[13px] font-medium px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-lg transition-all shadow-sm active:scale-95"
+            className="hidden sm:inline-flex items-center gap-1.5 bg-[#FF5A0A] hover:bg-[#E04E07] active:bg-[#C94304] text-white text-xs sm:text-[13px] font-semibold px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl transition-all shadow-xs active:scale-95 cursor-pointer"
           >
             <User className="w-3.5 h-3.5" />
-            <span>Login</span>
+            <span>Pankaj</span>
+            <ChevronDown className="w-3 h-3 text-white/80" />
           </button>
 
           {/* Mobile Hamburger Menu Button */}
