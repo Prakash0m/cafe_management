@@ -68,17 +68,15 @@ export function OrderWhatsNextCard({
   return (
     <div className="space-y-4">
       {/* 1. Cafe Interior Photography with Neon Sign */}
-      <div className="relative w-full h-44 sm:h-52 rounded-2xl overflow-hidden shadow-sm bg-[#1E110A]">
-        <Image
+      <div className="w-full h-44 sm:h-52 rounded-2xl overflow-hidden shadow-sm bg-[#1E110A] relative">
+        <img
           src={ASSETS.promotions.cafeInterior}
           alt="Beans & Bites Cafe Ambience"
-          fill
-          priority
-          sizes="(max-width: 1024px) 100vw, 450px"
-          className="object-cover"
+          className="w-full h-full object-cover"
+          loading="eager"
         />
         {/* Subtle bottom gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
       </div>
 
       {/* 2. What's Next & Action Rows Card */}

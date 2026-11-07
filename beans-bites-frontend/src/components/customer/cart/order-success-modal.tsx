@@ -5,6 +5,7 @@ import Link from "next/link";
 import { CheckCircle2, Clock, Utensils, Receipt, ArrowRight, X } from "lucide-react";
 import { useCartStore } from "@/store/cart.store";
 import { formatPrice } from "@/lib/utils";
+import { AnimatedOrderSuccessIcon } from "@/components/customer/orders/animated-order-success-icon";
 
 interface OrderSuccessModalProps {
   isOpen: boolean;
@@ -64,8 +65,8 @@ export function OrderSuccessModal({
             <X className="w-4 h-4" />
           </button>
 
-          <div className="w-14 h-14 mx-auto mb-3 rounded-full bg-white text-[#FF5A0A] flex items-center justify-center shadow-lg animate-in zoom-in-75 duration-300">
-            <CheckCircle2 className="w-8 h-8 stroke-[2.5]" />
+          <div className="mb-3 flex justify-center">
+            <AnimatedOrderSuccessIcon size="sm" allowReplay={true} />
           </div>
 
           <h2 className="text-xl sm:text-2xl font-black tracking-tight">

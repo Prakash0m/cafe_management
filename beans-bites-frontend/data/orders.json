@@ -1,0 +1,92 @@
+[
+  {
+    "id": "BB1048",
+    "displayId": "#BB1048",
+    "createdAt": "2026-11-07T01:07:32.089Z",
+    "placedTime": "10:24 AM",
+    "estimatedReadyTime": "10:45 AM",
+    "status": "preparing",
+    "orderType": "dine-in",
+    "tableNumber": "Table T4 (4 Seats)",
+    "cleanTableNumber": "T4",
+    "items": [
+      {
+        "id": "ord-item-1",
+        "name": "Margherita Pizza",
+        "price": 420,
+        "quantity": 1,
+        "imageUrl": "/assets/food/pizza/margherita-pizza.webp"
+      },
+      {
+        "id": "ord-item-2",
+        "name": "Chicken Burger",
+        "price": 380,
+        "quantity": 2,
+        "imageUrl": "/assets/food/burger/chicken-burger.webp"
+      },
+      {
+        "id": "ord-item-3",
+        "name": "Iced Latte",
+        "price": 240,
+        "quantity": 1,
+        "imageUrl": "/assets/food/beverages/iced-latte.webp"
+      }
+    ],
+    "itemCount": 4,
+    "subtotal": 1420,
+    "discount": 284,
+    "discountCode": "WEEKEND20 - 20%",
+    "serviceCharge": 57,
+    "vat": 148,
+    "totalPaid": 1341,
+    "paymentMethod": "cash",
+    "specialInstructions": "Extra napkins and served hot please.",
+    "customerName": "Guest Customer",
+    "notificationsEnabled": true
+  },
+  {
+    "id": "BB2641",
+    "displayId": "#BB2641",
+    "createdAt": "2026-11-07T01:17:32.103Z",
+    "placedTime": "10:40 AM",
+    "estimatedReadyTime": "11:00 AM",
+    "status": "preparing",
+    "orderType": "dine-in",
+    "tableNumber": "Table T4 (4 Seats)",
+    "cleanTableNumber": "T4",
+    "items": [
+      {
+        "id": "ord-item-4",
+        "name": "Margherita Pizza",
+        "price": 420,
+        "quantity": 1,
+        "imageUrl": "/assets/food/pizza/margherita-pizza.webp"
+      },
+      {
+        "id": "ord-item-5",
+        "name": "Chicken Burger",
+        "price": 380,
+        "quantity": 2,
+        "imageUrl": "/assets/food/burger/chicken-burger.webp"
+      },
+      {
+        "id": "ord-item-6",
+        "name": "Iced Latte",
+        "price": 240,
+        "quantity": 1,
+        "imageUrl": "/assets/food/beverages/iced-latte.webp"
+      }
+    ],
+    "itemCount": 4,
+    "subtotal": 1420,
+    "discount": 284,
+    "discountCode": "WEEKEND20 - 20%",
+    "serviceCharge": 57,
+    "vat": 148,
+    "totalPaid": 1341,
+    "paymentMethod": "esewa",
+    "specialInstructions": "Served fresh to Table T4.",
+    "customerName": "Table T4 Guest",
+    "notificationsEnabled": true
+  }
+]

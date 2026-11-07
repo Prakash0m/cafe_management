@@ -21,6 +21,8 @@ function OrdersPageContent() {
     setActiveOrder,
     updateOrderStatus,
     toggleOrderNotifications,
+    syncFromBackend,
+    isBackendSynced,
   } = useOrdersStore();
 
   const [mounted, setMounted] = React.useState(false);
@@ -33,6 +35,7 @@ function OrdersPageContent() {
   // Look up order based on URL query `?id=...` or route param `/orders/[orderId]`
   const rawId = (params?.orderId as string) || searchParams.get("id");
   const paramOrderId = rawId ? rawId.replace(/^#/, "").trim() : undefined;
+
   const order: CafeOrder = React.useMemo(() => {
     if (paramOrderId) {
       const found = getOrderById(paramOrderId);
@@ -40,6 +43,18 @@ function OrdersPageContent() {
     }
     return getActiveOrder() || DEFAULT_REFERENCE_ORDER;
   }, [paramOrderId, getOrderById, getActiveOrder]);
+
+  // Sync with real backend on load & periodic poll every 4 seconds
+  React.useEffect(() => {
+    if (!order?.id) return;
+    syncFromBackend(order.id);
+
+    const interval = setInterval(() => {
+      syncFromBackend(order.id);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [order?.id, syncFromBackend]);
 
   const handleSelectOrderFromHistory = (selected: CafeOrder) => {
     setActiveOrder(selected.id);
@@ -60,8 +75,12 @@ function OrdersPageContent() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           {/* LEFT COLUMN: Success Hero, Meta Pill, Status Stepper & Order Summary */}
           <div className="lg:col-span-7 space-y-4">
-            {/* 1. Success Celebration Hero */}
-            <OrderSuccessHero />
+            {/* 1. Success Celebration Hero with Animated Checkmark and Outward Confetti Bursts */}
+            <OrderSuccessHero
+              status={order.status}
+              orderId={order.id}
+              isBackendSynced={isBackendSynced}
+            />
 
             {/* 2. Order ID, Order Type & Table Pill Banner */}
             <OrderMetaBanner
@@ -70,7 +89,7 @@ function OrdersPageContent() {
               tableNumber={order.cleanTableNumber || "T4"}
             />
 
-            {/* 3. 4-Stage Status Stepper Tracker */}
+            {/* 3. 4-Stage Status Stepper Tracker (Controlled by Real Backend) */}
             <OrderStatusTracker
               currentStage={
                 order.status === "cancelled" ? "preparing" : order.status
@@ -92,8 +111,9 @@ function OrdersPageContent() {
             />
           </div>
 
-          {/* RIGHT COLUMN: Cafe Interior Neon Photo & What's Next Action Card */}
-          <div className="lg:col-span-5 pt-2 lg:pt-4">
+          {/* RIGHT COLUMN: Cafe Interior Neon Photo, What's Next Card & Live Backend Controller */}
+          <div className="lg:col-span-5 pt-2 lg:pt-4 space-y-4">
+            {/* 1. What's Next & Quick Actions Card */}
             <OrderWhatsNextCard
               orderId={order.displayId}
               tableNumber={order.cleanTableNumber || "T4"}

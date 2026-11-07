@@ -29,14 +29,14 @@ export function PlaceOrderView({
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [orderNumber, setOrderNumber] = React.useState("#BB-8492");
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
     // Generate order ID
     const randomDigits = Math.floor(1000 + Math.random() * 9000);
     const newId = `BB${randomDigits}`;
     setOrderNumber(`#${newId}`);
 
-    // Save to Orders store before clearing cart
-    addOrder({
+    // Save to Orders store before clearing cart (persists to backend API)
+    await addOrder({
       id: newId,
       items: cartStore.items.map((ci) => ({
         id: ci.id,

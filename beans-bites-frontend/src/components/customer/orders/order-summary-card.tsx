@@ -106,13 +106,12 @@ export function OrderSummaryCard({
             >
               {/* Left: Thumbnail & Name with quantity */}
               <div className="flex items-center gap-3 min-w-0">
-                <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0 shadow-2xs">
-                  <Image
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0 shadow-2xs">
+                  <img
                     src={imageUrl}
                     alt={name}
-                    fill
-                    sizes="48px"
-                    className="object-cover"
+                    className="w-full h-full object-cover"
+                    loading="eager"
                   />
                 </div>
                 <div className="min-w-0">
