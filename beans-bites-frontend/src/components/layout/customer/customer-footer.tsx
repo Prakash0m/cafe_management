@@ -6,13 +6,12 @@ import {
   Phone,
   Mail,
   Clock,
-  Heart,
 } from "lucide-react";
 import { ASSETS } from "@/lib/assets";
 
 export function CustomerFooter() {
   return (
-    <footer className="bg-[#1C120C] text-gray-300 pt-12 pb-8 border-t border-white/10">
+    <footer className="bg-[#1C120C] text-gray-300 pt-12 pb-24 sm:pb-8 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-10 border-b border-white/10">
           {/* Col 1: Brand & About */}
@@ -185,10 +184,18 @@ export function CustomerFooter() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-400">
           <p>© {new Date().getFullYear()} Beans & Bites Cafe & Restaurant. All rights reserved.</p>
-          <p className="flex items-center gap-1">
-            Crafted with <Heart className="w-3.5 h-3.5 text-[#FF5A0A] fill-[#FF5A0A]" /> for food lovers.
+          <p className="flex items-center gap-1.5">
+            <span>Created by</span>
+            <a
+              href="https://www.omprakashsharma.info.np/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#FF7A24] hover:text-[#FF5A0A] font-semibold underline underline-offset-4 transition-colors"
+            >
+              Om Prakash Sharma
+            </a>
           </p>
         </div>
       </div>
