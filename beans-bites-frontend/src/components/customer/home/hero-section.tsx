@@ -3,10 +3,9 @@
 import * as React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ChevronLeft, ChevronRight, ChefHat } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { ASSETS } from "@/lib/assets";
 import { HeroBenefits } from "./hero-benefits";
-import { useOrdersStore } from "@/store/orders.store";
 
 interface HeroSlide {
   id: string;
@@ -92,20 +91,10 @@ const HERO_SLIDES: HeroSlide[] = [
 export function HeroSection() {
   const [currentSlide, setCurrentSlide] = React.useState(0);
   const [isPaused, setIsPaused] = React.useState(false);
-  const { orders } = useOrdersStore();
-  const [mounted, setMounted] = React.useState(false);
 
   // Touch Swipe Handling for Native-feel mobile swiping
   const touchStartX = React.useRef(0);
   const touchEndX = React.useRef(0);
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  const liveOrder = mounted
-    ? orders.find((o) => o.status === "preparing" || o.status === "ready")
-    : null;
 
   // Auto-play carousel every 5 seconds (paused when hovered or touched)
   React.useEffect(() => {
@@ -200,24 +189,6 @@ export function HeroSection() {
               </div>
             );
           })}
-
-          {/* Active Live Order Floating Tracker Pill (Top-Left of Image) */}
-          {liveOrder && (
-            <div className="absolute top-2.5 left-3 z-20">
-              <Link
-                href={`/orders?id=${liveOrder.id}`}
-                className="inline-flex items-center gap-1.5 bg-[#140A05]/90 border border-emerald-500/60 backdrop-blur-md px-2.5 py-1 rounded-full text-white text-[10px] font-semibold shadow-lg"
-              >
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span>
-                  Order {liveOrder.displayId} is {liveOrder.status === "preparing" ? "cooking 👨‍🍳" : "ready! 🔔"}
-                </span>
-                <span className="text-[#FF7A24] font-bold flex items-center gap-0.5 ml-0.5">
-                  Track <ArrowRight className="w-2.5 h-2.5" />
-                </span>
-              </Link>
-            </div>
-          )}
 
           {/* Floating Category Badge (Bottom-Left of Image) */}
           <div className="absolute bottom-2.5 left-3 z-20">
@@ -324,23 +295,6 @@ export function HeroSection() {
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full py-8 sm:py-10 flex flex-col justify-between h-full min-h-[400px] lg:h-[420px]">
           {/* Dynamic Text Content */}
           <div className="max-w-xl space-y-4 pt-4 transition-all duration-500">
-            {liveOrder && (
-              <div>
-                <Link
-                  href={`/orders?id=${liveOrder.id}`}
-                  className="inline-flex items-center gap-2 bg-[#1A0E08]/90 hover:bg-[#1A0E08] border border-emerald-500/50 backdrop-blur-md px-3.5 py-1.5 rounded-full text-white text-[11px] font-semibold shadow-lg transition-all group animate-in fade-in slide-in-from-top-2 duration-300"
-                >
-                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span>
-                    Order {liveOrder.displayId} is {liveOrder.status === "preparing" ? "in the kitchen 👨‍🍳" : "ready! 🔔"}
-                  </span>
-                  <span className="text-[#FF7A24] font-bold group-hover:translate-x-0.5 transition-transform flex items-center gap-0.5">
-                    Track <ArrowRight className="w-3 h-3" />
-                  </span>
-                </Link>
-              </div>
-            )}
-
             {/* Orange uppercase badge */}
             <div className="inline-flex items-center gap-1.5 text-[11px] font-bold tracking-[0.18em] text-[#FF7A24] uppercase">
               <span>{active.badge}</span>
