@@ -290,3 +290,4 @@ class OrdersDatabase {
 const globalForOrders = global as unknown as { ordersDb?: OrdersDatabase };
 export const ordersDb = globalForOrders.ordersDb || new OrdersDatabase();
 globalForOrders.ordersDb = ordersDb;
+

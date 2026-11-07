@@ -34,6 +34,31 @@
 }
 
 /* =========================================================
+   Mobile Continuous Running Category Marquee
+   ========================================================= */
+
+@keyframes category-glide {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-category-glide {
+  display: flex;
+  width: max-content;
+  animation: category-glide 20s linear infinite;
+  will-change: transform;
+}
+
+.animate-category-glide:hover,
+.animate-category-glide:active {
+  animation-play-state: paused;
+}
+
+/* =========================================================
    Celebration & Success SVG Keyframe Animations
    ========================================================= */
 
