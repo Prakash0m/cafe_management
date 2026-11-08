@@ -274,3 +274,4 @@ export function LiveChatModal({ isOpen, onClose }: LiveChatModalProps) {
     </div>
   );
 }
+
