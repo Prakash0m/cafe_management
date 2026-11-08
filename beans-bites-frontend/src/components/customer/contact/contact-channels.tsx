@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { MessageSquare, PhoneCall, MapPin, ExternalLink, ArrowRight, Zap } from "lucide-react";
+import { MessageSquare, PhoneCall, MapPin, ExternalLink, ArrowRight } from "lucide-react";
 
 interface ContactChannelsProps {
   onOpenLiveChat: () => void;
@@ -44,12 +44,6 @@ export function ContactChannels({ onOpenLiveChat }: ContactChannelsProps) {
               <p className="text-xs text-gray-500 mt-1.5 leading-relaxed">
                 Chat directly with our Cafe Admin inside the app for live updates on orders, tables, or dietary queries.
               </p>
-
-              {/* Quick Highlight */}
-              <div className="mt-3 flex items-center gap-1.5 text-[11px] font-semibold text-emerald-700 bg-emerald-50/70 px-2.5 py-1 rounded-lg border border-emerald-100">
-                <Zap className="w-3 h-3 text-emerald-600 fill-emerald-600" />
-                <span>Typical reply in &lt; 2 mins</span>
-              </div>
             </div>
 
             <button
@@ -82,11 +76,6 @@ export function ContactChannels({ onOpenLiveChat }: ContactChannelsProps) {
               <p className="text-xs text-gray-500 mt-1.5 leading-relaxed">
                 Message our customer care directly on WhatsApp for instant replies, food photos, and special requests.
               </p>
-
-              {/* Quick Highlight */}
-              <div className="mt-3 flex items-center gap-1.5 text-[11px] font-semibold text-emerald-800 bg-emerald-50/70 px-2.5 py-1 rounded-lg border border-emerald-100">
-                <span>📱 +977 9801234567</span>
-              </div>
             </div>
 
             <a
@@ -118,11 +107,6 @@ export function ContactChannels({ onOpenLiveChat }: ContactChannelsProps) {
               <p className="text-xs text-gray-500 mt-1.5 leading-relaxed">
                 Urgent order questions or instant table bookings? Call our front desk staff directly.
               </p>
-
-              {/* Quick Highlight */}
-              <div className="mt-3 flex items-center gap-1.5 text-[11px] font-semibold text-stone-800 bg-stone-50 px-2.5 py-1 rounded-lg border border-stone-200">
-                <span>📞 +977 1-4245678</span>
-              </div>
             </div>
 
             <a
@@ -152,11 +136,6 @@ export function ContactChannels({ onOpenLiveChat }: ContactChannelsProps) {
               <p className="text-xs text-gray-500 mt-1.5 leading-relaxed">
                 Lakeside Avenue, Kathmandu. Experience artisan coffee, cozy booths, and wood-fired pizza in person.
               </p>
-
-              {/* Quick Highlight */}
-              <div className="mt-3 flex items-center gap-1.5 text-[11px] font-semibold text-orange-900 bg-orange-50/60 px-2.5 py-1 rounded-lg border border-orange-100">
-                <span>📍 Lakeside Ave, Kathmandu</span>
-              </div>
             </div>
 
             <a
