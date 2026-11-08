@@ -1,3 +1,9 @@
+export interface MacroNutrients {
+  carbs: number; // in grams
+  protein: number; // in grams
+  fat: number; // in grams
+}
+
 export interface FoodItem {
   id: string;
   name: string;
@@ -11,6 +17,7 @@ export interface FoodItem {
   isAvailable: boolean;
   preparationTime?: string;
   calories?: number;
+  macros?: MacroNutrients;
   rating?: number;
   // Ingredients and culinary details (k k used gareko foods vitra)
   ingredients?: string[];
@@ -55,4 +62,3 @@ export interface HomepageData {
   popularItems: FoodItem[];
   promotions: Promotion[];
 }
-

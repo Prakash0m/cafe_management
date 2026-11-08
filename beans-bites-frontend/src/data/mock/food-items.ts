@@ -15,6 +15,7 @@ export const MOCK_POPULAR_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "20-25 mins",
     calories: 680,
+    macros: { carbs: 72, protein: 26, fat: 22 },
     rating: 4.9,
     ingredients: [
       "Italian Sourdough Crust",
@@ -41,6 +42,7 @@ export const MOCK_POPULAR_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "15-20 mins",
     calories: 550,
+    macros: { carbs: 44, protein: 34, fat: 22 },
     rating: 4.8,
     ingredients: [
       "Grilled Chicken Breast Patty",
@@ -67,6 +69,7 @@ export const MOCK_POPULAR_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "15-20 mins",
     calories: 420,
+    macros: { carbs: 38, protein: 28, fat: 14 },
     rating: 4.9,
     ingredients: [
       "Handmade Thin Wheat Wrappers",
@@ -92,6 +95,7 @@ export const MOCK_POPULAR_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "15-25 mins",
     calories: 620,
+    macros: { carbs: 64, protein: 20, fat: 28 },
     rating: 4.7,
     ingredients: [
       "Durum Wheat Fettuccine",
@@ -122,6 +126,7 @@ export const MOCK_ALL_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "20-25 mins",
     calories: 680,
+    macros: { carbs: 72, protein: 26, fat: 22 },
     rating: 4.9,
     ingredients: [
       "Italian Sourdough Crust",
@@ -148,6 +153,7 @@ export const MOCK_ALL_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "15-20 mins",
     calories: 550,
+    macros: { carbs: 44, protein: 34, fat: 22 },
     rating: 4.8,
     ingredients: [
       "Grilled Chicken Breast Patty",
@@ -174,6 +180,7 @@ export const MOCK_ALL_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "15-20 mins",
     calories: 420,
+    macros: { carbs: 38, protein: 28, fat: 14 },
     rating: 4.9,
     ingredients: [
       "Handmade Thin Wheat Wrappers",
@@ -199,6 +206,7 @@ export const MOCK_ALL_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "15-25 mins",
     calories: 620,
+    macros: { carbs: 64, protein: 20, fat: 28 },
     rating: 4.7,
     ingredients: [
       "Durum Wheat Fettuccine",
@@ -224,6 +232,7 @@ export const MOCK_ALL_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "10-15 mins",
     calories: 380,
+    macros: { carbs: 46, protein: 14, fat: 12 },
     rating: 4.6,
     ingredients: [
       "Multi-Grain Bread Loaf",
@@ -249,6 +258,7 @@ export const MOCK_ALL_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "10-12 mins",
     calories: 290,
+    macros: { carbs: 16, protein: 14, fat: 18 },
     rating: 4.7,
     ingredients: [
       "Hydroponic Romaine Hearts",
@@ -275,6 +285,7 @@ export const MOCK_ALL_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "10-15 mins",
     calories: 450,
+    macros: { carbs: 58, protein: 6, fat: 22 },
     rating: 4.9,
     ingredients: [
       "70% Belgian Dark Cocoa",
@@ -301,6 +312,7 @@ export const MOCK_ALL_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "5-10 mins",
     calories: 160,
+    macros: { carbs: 18, protein: 8, fat: 6 },
     rating: 4.8,
     ingredients: [
       "Double Espresso (Single-Origin Arabica)",
@@ -327,6 +339,7 @@ export const MOCK_ALL_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "20-25 mins",
     calories: 780,
+    macros: { carbs: 68, protein: 34, fat: 32 },
     rating: 4.8,
     ingredients: [
       "Italian Sourdough Crust",
@@ -352,6 +365,7 @@ export const MOCK_ALL_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "20-25 mins",
     calories: 610,
+    macros: { carbs: 70, protein: 20, fat: 18 },
     rating: 4.7,
     ingredients: [
       "Stone Oven Thin Sourdough Crust",
@@ -378,6 +392,7 @@ export const MOCK_ALL_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "15-20 mins",
     calories: 720,
+    macros: { carbs: 46, protein: 44, fat: 38 },
     rating: 4.9,
     ingredients: [
       "Two Smashed Ground Patties",
@@ -404,6 +419,7 @@ export const MOCK_ALL_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "12-15 mins",
     calories: 480,
+    macros: { carbs: 54, protein: 16, fat: 18 },
     rating: 4.6,
     ingredients: [
       "Spiced Potato & Green Pea Crisp Patty",
@@ -429,6 +445,7 @@ export const MOCK_ALL_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "15-20 mins",
     calories: 490,
+    macros: { carbs: 42, protein: 26, fat: 22 },
     rating: 4.7,
     ingredients: [
       "Deep Fried Crispy Wheat Wrappers",
@@ -453,6 +470,7 @@ export const MOCK_ALL_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "15-20 mins",
     calories: 390,
+    macros: { carbs: 36, protein: 18, fat: 16 },
     rating: 4.6,
     ingredients: [
       "Fresh Himalayan Malai Paneer",
@@ -477,6 +495,7 @@ export const MOCK_ALL_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "15-20 mins",
     calories: 480,
+    macros: { carbs: 68, protein: 16, fat: 12 },
     rating: 4.6,
     ingredients: [
       "Italian Penne Rigate Pasta",
@@ -503,6 +522,7 @@ export const MOCK_ALL_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "15-20 mins",
     calories: 520,
+    macros: { carbs: 44, protein: 36, fat: 20 },
     rating: 4.8,
     ingredients: [
       "Triple-Layer Artisan Sourdough",
@@ -528,6 +548,7 @@ export const MOCK_ALL_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "10-12 mins",
     calories: 270,
+    macros: { carbs: 14, protein: 10, fat: 18 },
     rating: 4.7,
     ingredients: [
       "Greek Feta Cheese Block",
@@ -554,6 +575,7 @@ export const MOCK_ALL_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "10-12 mins",
     calories: 340,
+    macros: { carbs: 48, protein: 5, fat: 16 },
     rating: 4.9,
     ingredients: [
       "Crisp Russet Potato Strips",
@@ -578,6 +600,7 @@ export const MOCK_ALL_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "10-12 mins",
     calories: 360,
+    macros: { carbs: 50, protein: 5, fat: 17 },
     rating: 4.8,
     ingredients: [
       "Skin-On Golden French Fries",
@@ -602,6 +625,7 @@ export const MOCK_ALL_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "5-10 mins",
     calories: 420,
+    macros: { carbs: 42, protein: 8, fat: 24 },
     rating: 4.9,
     ingredients: [
       "Philadelphia Cream Cheese",
@@ -626,6 +650,7 @@ export const MOCK_ALL_ITEMS: FoodItem[] = [
     isAvailable: true,
     preparationTime: "5-8 mins",
     calories: 120,
+    macros: { carbs: 12, protein: 7, fat: 5 },
     rating: 4.8,
     ingredients: [
       "Double Espresso (Single-Origin Nuwakot)",
