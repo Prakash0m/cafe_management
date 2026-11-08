@@ -24,9 +24,9 @@ export function ContactChannels({ onOpenLiveChat }: ContactChannelsProps) {
         </div>
 
         {/* 4 Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
           {/* 1. In-System Live Chat */}
-          <div className="bg-white rounded-3xl p-5 sm:p-6 border border-orange-100 shadow-[0_2px_16px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_32px_rgba(255,90,10,0.10)] hover:border-orange-200 transition-all duration-300 flex flex-col justify-between group">
+          <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-orange-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_32px_rgba(255,90,10,0.10)] hover:border-orange-200 transition-all duration-300 flex flex-col justify-between group">
             <div>
               {/* Top Header: Icon + Status Badge */}
               <div className="flex items-center justify-between mb-4">
@@ -57,7 +57,7 @@ export function ContactChannels({ onOpenLiveChat }: ContactChannelsProps) {
           </div>
 
           {/* 2. Official WhatsApp */}
-          <div className="bg-white rounded-3xl p-5 sm:p-6 border border-emerald-100 shadow-[0_2px_16px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_32px_rgba(37,211,102,0.12)] hover:border-emerald-300 transition-all duration-300 flex flex-col justify-between group">
+          <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-emerald-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_32px_rgba(37,211,102,0.12)] hover:border-emerald-300 transition-all duration-300 flex flex-col justify-between group">
             <div>
               {/* Top Header: Icon + Status Badge */}
               <div className="flex items-center justify-between mb-4">
@@ -90,28 +90,28 @@ export function ContactChannels({ onOpenLiveChat }: ContactChannelsProps) {
           </div>
 
           {/* 3. Direct Phone Support */}
-          <div className="bg-white rounded-3xl p-5 sm:p-6 border border-stone-200 shadow-[0_2px_16px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.08)] hover:border-stone-300 transition-all duration-300 flex flex-col justify-between group">
+          <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-stone-200 shadow-[0_2px_14px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.08)] hover:border-stone-300 transition-all duration-300 flex flex-col justify-between group">
             <div>
               {/* Top Header: Icon + Status Badge */}
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-11 h-11 rounded-2xl bg-stone-100 border border-stone-200 text-stone-800 flex items-center justify-center shadow-2xs group-hover:scale-105 transition-transform">
-                  <PhoneCall className="w-5 h-5 text-stone-700" />
+              <div className="flex items-center justify-between mb-3.5 sm:mb-4">
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-stone-100 border border-stone-200 text-stone-800 flex items-center justify-center shadow-2xs group-hover:scale-105 transition-transform">
+                  <PhoneCall className="w-4 h-4 sm:w-5 sm:h-5 text-stone-700" />
                 </div>
-                <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-stone-100 text-stone-700 text-[11px] font-bold border border-stone-200 shadow-2xs">
+                <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-stone-100 text-stone-700 text-[10.5px] sm:text-[11px] font-bold border border-stone-200 shadow-2xs">
                   8 AM – 10 PM
                 </span>
               </div>
 
               {/* Title & Description */}
               <h3 className="text-base font-extrabold text-gray-900 tracking-tight">Direct Phone Support</h3>
-              <p className="text-xs text-gray-500 mt-1.5 leading-relaxed">
+              <p className="text-xs text-gray-500 mt-1 sm:mt-1.5 leading-relaxed">
                 Urgent order questions or instant table bookings? Call our front desk staff directly.
               </p>
             </div>
 
             <a
               href="tel:+97714245678"
-              className="mt-5 w-full inline-flex items-center justify-center gap-2 bg-stone-900 hover:bg-black text-white text-xs sm:text-[13px] font-bold py-2.5 px-4 rounded-xl shadow-xs transition-all active:scale-98"
+              className="mt-4 sm:mt-5 w-full inline-flex items-center justify-center gap-2 bg-stone-900 hover:bg-black text-white text-xs sm:text-[13px] font-bold py-2.5 px-4 rounded-xl shadow-xs transition-all active:scale-98"
             >
               <span>Call Front Desk</span>
               <PhoneCall className="w-3.5 h-3.5" />
@@ -119,21 +119,21 @@ export function ContactChannels({ onOpenLiveChat }: ContactChannelsProps) {
           </div>
 
           {/* 4. Visit Lakeside Cafe */}
-          <div className="bg-white rounded-3xl p-5 sm:p-6 border border-stone-200 shadow-[0_2px_16px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.08)] hover:border-stone-300 transition-all duration-300 flex flex-col justify-between group">
+          <div className="bg-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-stone-200 shadow-[0_2px_14px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.08)] hover:border-stone-300 transition-all duration-300 flex flex-col justify-between group">
             <div>
               {/* Top Header: Icon + Status Badge */}
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-11 h-11 rounded-2xl bg-orange-50 border border-orange-100 text-[#FF5A0A] flex items-center justify-center shadow-2xs group-hover:scale-105 transition-transform">
-                  <MapPin className="w-5 h-5" />
+              <div className="flex items-center justify-between mb-3.5 sm:mb-4">
+                <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-2xl bg-orange-50 border border-orange-100 text-[#FF5A0A] flex items-center justify-center shadow-2xs group-hover:scale-105 transition-transform">
+                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5" />
                 </div>
-                <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-orange-50 text-orange-800 text-[11px] font-bold border border-orange-200 shadow-2xs">
+                <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-orange-50 text-orange-800 text-[10.5px] sm:text-[11px] font-bold border border-orange-200 shadow-2xs">
                   Kathmandu
                 </span>
               </div>
 
               {/* Title & Description */}
               <h3 className="text-base font-extrabold text-gray-900 tracking-tight">Visit Us In Person</h3>
-              <p className="text-xs text-gray-500 mt-1.5 leading-relaxed">
+              <p className="text-xs text-gray-500 mt-1 sm:mt-1.5 leading-relaxed">
                 Lakeside Avenue, Kathmandu. Experience artisan coffee, cozy booths, and wood-fired pizza in person.
               </p>
             </div>
@@ -142,7 +142,7 @@ export function ContactChannels({ onOpenLiveChat }: ContactChannelsProps) {
               href="https://maps.google.com/?q=Lakeside+Kathmandu+Nepal"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-5 w-full inline-flex items-center justify-center gap-2 bg-stone-100 hover:bg-stone-200 text-stone-900 text-xs sm:text-[13px] font-bold py-2.5 px-4 rounded-xl border border-stone-200 transition-all active:scale-98"
+              className="mt-4 sm:mt-5 w-full inline-flex items-center justify-center gap-2 bg-stone-100 hover:bg-stone-200 text-stone-900 text-xs sm:text-[13px] font-bold py-2.5 px-4 rounded-xl border border-stone-200 transition-all active:scale-98"
             >
               <span>Get Directions</span>
               <ExternalLink className="w-3.5 h-3.5" />
