@@ -11,11 +11,39 @@ import {
 import { MenuFoodCard } from "@/components/customer/menu/menu-food-card";
 import { MOCK_CATEGORIES } from "@/data/mock/categories";
 import { MOCK_ALL_ITEMS } from "@/data/mock/food-items";
+import { FoodItem } from "@/types/menu.types";
 import { Search, RotateCcw } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 function MenuContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
+
+  // Live menu items with full ingredients, seeded from mock and synced with /api/menu
+  const [allItems, setAllItems] = React.useState<FoodItem[]>(MOCK_ALL_ITEMS);
+
+  // Sync with live backend /api/menu on mount so backend modifications reflect immediately
+  React.useEffect(() => {
+    let isMounted = true;
+    fetch("/api/menu")
+      .then((res) => res.json())
+      .then((json) => {
+        if (
+          isMounted &&
+          json.success &&
+          Array.isArray(json.data) &&
+          json.data.length > 0
+        ) {
+          setAllItems(json.data);
+        }
+      })
+      .catch((err) => {
+        console.warn("Using offline menu items fallback:", err);
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   // Category State
   const initialCategory = searchParams.get("category") || "all";
@@ -28,6 +56,9 @@ function MenuContent() {
   // Local Search State
   const initialSearch = searchParams.get("search") || "";
   const [searchQuery, setSearchQuery] = React.useState<string>(initialSearch);
+
+  // Desktop View Mode (Grid or List - mobile is always responsive list view)
+  const [viewMode, setViewMode] = React.useState<"grid" | "list">("grid");
 
   // Keep state in sync with URL searchParams if they change
   React.useEffect(() => {
@@ -75,7 +106,7 @@ function MenuContent() {
 
   // Filter items
   const filteredItems = React.useMemo(() => {
-    return MOCK_ALL_ITEMS.filter((item) => {
+    return allItems.filter((item) => {
       // 1. Category Filter
       if (selectedCategory !== "all" && item.category !== selectedCategory) {
         return false;
@@ -99,12 +130,22 @@ function MenuContent() {
         const matchesName = item.name.toLowerCase().includes(query);
         const matchesDesc = item.description.toLowerCase().includes(query);
         const matchesCategory = item.category.toLowerCase().includes(query);
-        if (!matchesName && !matchesDesc && !matchesCategory) return false;
+        const matchesIngredients =
+          item.ingredients &&
+          item.ingredients.some((ing) => ing.toLowerCase().includes(query));
+        if (
+          !matchesName &&
+          !matchesDesc &&
+          !matchesCategory &&
+          !matchesIngredients
+        ) {
+          return false;
+        }
       }
 
       return true;
     });
-  }, [selectedCategory, activeFilter, searchQuery]);
+  }, [allItems, selectedCategory, activeFilter, searchQuery]);
 
   // Current category display name
   const currentCategoryName = React.useMemo(() => {
@@ -119,8 +160,8 @@ function MenuContent() {
       <MenuBanner />
 
       {/* 2. Main Two-Column Content Layout */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-9">
-        <div className="flex flex-col md:flex-row gap-6 lg:gap-8 items-start">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-8">
+        <div className="flex flex-col md:flex-row gap-5 lg:gap-8 items-start">
           {/* Left Column: Categories Sidebar (Desktop/Tablet) */}
           <div className="w-full md:w-56 lg:w-64 flex-shrink-0 md:sticky md:top-24">
             <MenuCategorySidebar
@@ -130,21 +171,36 @@ function MenuContent() {
             />
           </div>
 
-          {/* Right Column: Filter Bar & Food Items Grid */}
-          <main className="flex-1 min-w-0 w-full flex flex-col gap-5 sm:gap-6">
-            {/* Filter Bar */}
+          {/* Right Column: Filter Bar & Food Items */}
+          <main className="flex-1 min-w-0 w-full flex flex-col gap-4 sm:gap-5">
+            {/* Filter Bar with view toggle */}
             <MenuFilterBar
               title={currentCategoryName}
               itemCount={filteredItems.length}
               activeFilter={activeFilter}
               onFilterChange={handleFilterChange}
+              viewMode={viewMode}
+              onViewModeChange={setViewMode}
             />
 
-            {/* Food Grid */}
+            {/* Food Grid / List Display */}
             {filteredItems.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
+              <div
+                className={cn(
+                  // On mobile (< sm): ALWAYS clean vertical list (flex flex-col gap-3)
+                  // On desktop (sm+): Depends on viewMode (grid or list)
+                  "w-full",
+                  viewMode === "list"
+                    ? "flex flex-col gap-3 sm:gap-4"
+                    : "flex flex-col gap-3 sm:grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 sm:gap-5"
+                )}
+              >
                 {filteredItems.map((item) => (
-                  <MenuFoodCard key={item.id} item={item} />
+                  <MenuFoodCard
+                    key={item.id}
+                    item={item}
+                    viewMode={viewMode}
+                  />
                 ))}
               </div>
             ) : (
