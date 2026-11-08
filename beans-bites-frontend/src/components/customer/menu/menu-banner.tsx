@@ -3,7 +3,6 @@
 import * as React from "react";
 import Image from "next/image";
 import { ASSETS } from "@/lib/assets";
-import { Sparkles } from "lucide-react";
 
 export function MenuBanner() {
   return (
@@ -31,12 +30,6 @@ export function MenuBanner() {
       {/* Banner Content Container */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 md:py-10">
         <div className="max-w-xl text-left">
-          {/* Subtle Top Pill */}
-          <div className="inline-flex items-center gap-1.5 bg-black/40 backdrop-blur-md border border-white/15 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full text-white/95 text-[11px] sm:text-xs font-semibold mb-2 sm:mb-2.5 shadow-sm">
-            <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#FF5A0A]" />
-            <span>Artisan Kitchen • Fresh & Made to Order</span>
-          </div>
-
           {/* Heading */}
           <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-[42px] font-extrabold tracking-tight text-white leading-tight drop-shadow-md">
             Our Food <span className="text-[#FF5A0A] italic font-serif">Menu</span>
