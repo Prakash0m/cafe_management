@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Users, Star, Utensils, Coffee, RefreshCw } from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface StatItem {
@@ -12,7 +12,6 @@ interface StatItem {
   label: string;
   subtext: string;
   theme: "green" | "orange" | "red";
-  icon: React.ComponentType<{ className?: string }>;
 }
 
 const STATS_DATA: StatItem[] = [
@@ -23,7 +22,6 @@ const STATS_DATA: StatItem[] = [
     label: "Guests Welcomed",
     subtext: "Since our Lakeside opening",
     theme: "green",
-    icon: Users,
   },
   {
     id: "rating",
@@ -33,7 +31,6 @@ const STATS_DATA: StatItem[] = [
     label: "Average Guest Score",
     subtext: "Over 650+ verified reviews",
     theme: "orange",
-    icon: Star,
   },
   {
     id: "recipes",
@@ -42,7 +39,6 @@ const STATS_DATA: StatItem[] = [
     label: "Artisan Recipes",
     subtext: "Pizzas, burgers, momos & treats",
     theme: "red",
-    icon: Utensils,
   },
   {
     id: "coffee",
@@ -51,7 +47,6 @@ const STATS_DATA: StatItem[] = [
     label: "Himalayan Beans",
     subtext: "Fair-trade estate micro-lots",
     theme: "green",
-    icon: Coffee,
   },
 ];
 
@@ -171,28 +166,23 @@ export function AboutStats() {
         {/* 4 Cards Grid (2x2 on mobile, 4 in a row on desktop) */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 lg:gap-5">
           {STATS_DATA.map((stat) => {
-            const Icon = stat.icon;
-
             const themeStyles = {
               green: {
                 cardBorder: "border-emerald-100/90 hover:border-emerald-300",
                 cardHoverShadow: "hover:shadow-[0_8px_24px_rgba(16,185,129,0.10)]",
                 cardHoverBg: "hover:bg-emerald-50/20",
-                iconBox: "bg-emerald-50 border-emerald-200/80 text-emerald-600 shadow-emerald-500/10",
                 number: "text-emerald-600",
               },
               orange: {
                 cardBorder: "border-orange-100/90 hover:border-orange-300",
                 cardHoverShadow: "hover:shadow-[0_8px_24px_rgba(255,90,10,0.10)]",
                 cardHoverBg: "hover:bg-orange-50/20",
-                iconBox: "bg-orange-50 border-orange-200/80 text-[#FF5A0A] shadow-orange-500/10",
                 number: "text-[#FF5A0A]",
               },
               red: {
                 cardBorder: "border-red-100/90 hover:border-red-300",
                 cardHoverShadow: "hover:shadow-[0_8px_24px_rgba(239,68,68,0.10)]",
                 cardHoverBg: "hover:bg-red-50/20",
-                iconBox: "bg-red-50 border-red-200/80 text-red-600 shadow-red-500/10",
                 number: "text-red-600",
               },
             }[stat.theme];
@@ -203,26 +193,16 @@ export function AboutStats() {
                 onClick={handleRerun}
                 onMouseEnter={handleRerun}
                 className={cn(
-                  "relative rounded-2xl p-3.5 sm:p-5 border bg-white flex flex-col items-center text-center transition-all duration-300 group cursor-pointer shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:-translate-y-0.5",
+                  "relative rounded-2xl p-4 sm:p-5 sm:py-6 border bg-white flex flex-col items-center text-center transition-all duration-300 group cursor-pointer shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:-translate-y-0.5",
                   themeStyles.cardBorder,
                   themeStyles.cardHoverShadow,
                   themeStyles.cardHoverBg
                 )}
               >
-                {/* Top Colored Icon Box */}
-                <div
-                  className={cn(
-                    "w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center mb-2 sm:mb-2.5 border shadow-2xs transition-transform duration-300 group-hover:scale-105",
-                    themeStyles.iconBox
-                  )}
-                >
-                  <Icon className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.2]" />
-                </div>
-
                 {/* Big Running Animated Number */}
                 <div
                   className={cn(
-                    "text-2xl sm:text-3xl lg:text-[34px] font-black tracking-tight leading-none font-mono",
+                    "text-2xl sm:text-3xl lg:text-[36px] font-black tracking-tight leading-none font-mono",
                     themeStyles.number
                   )}
                 >
@@ -235,12 +215,12 @@ export function AboutStats() {
                 </div>
 
                 {/* Label */}
-                <span className="text-[12.5px] sm:text-[13.5px] font-bold text-gray-900 mt-1.5 sm:mt-2 tracking-tight leading-snug">
+                <span className="text-[12.5px] sm:text-sm font-bold text-gray-900 mt-2 sm:mt-2.5 tracking-tight leading-snug">
                   {stat.label}
                 </span>
 
                 {/* Subtext */}
-                <span className="text-[10.5px] sm:text-[11.5px] text-gray-500 mt-0.5 font-normal leading-tight line-clamp-1 sm:line-clamp-none">
+                <span className="text-[10.5px] sm:text-[11.5px] text-gray-500 mt-1 font-normal leading-tight line-clamp-1 sm:line-clamp-none">
                   {stat.subtext}
                 </span>
               </div>
