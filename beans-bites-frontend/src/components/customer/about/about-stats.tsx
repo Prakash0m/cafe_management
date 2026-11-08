@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Users, Star, Utensils, Coffee, Sparkles, RefreshCw } from "lucide-react";
+import { Users, Star, Utensils, Coffee, RefreshCw } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface StatItem {
@@ -11,7 +11,7 @@ interface StatItem {
   suffix: string;
   label: string;
   subtext: string;
-  theme: "green" | "yellow";
+  theme: "green" | "orange" | "red";
   icon: React.ComponentType<{ className?: string }>;
 }
 
@@ -32,7 +32,7 @@ const STATS_DATA: StatItem[] = [
     suffix: " ★",
     label: "Average Guest Score",
     subtext: "Over 650+ verified reviews",
-    theme: "yellow",
+    theme: "orange",
     icon: Star,
   },
   {
@@ -41,7 +41,7 @@ const STATS_DATA: StatItem[] = [
     suffix: "+",
     label: "Artisan Recipes",
     subtext: "Pizzas, burgers, momos & treats",
-    theme: "yellow",
+    theme: "red",
     icon: Utensils,
   },
   {
@@ -55,7 +55,7 @@ const STATS_DATA: StatItem[] = [
   },
 ];
 
-// Smooth Animated Counter component with ease-out cubic animation
+// Smooth Animated Counter component with ease-out cubic deceleration
 function RunningNumber({
   target,
   decimals = 0,
@@ -72,9 +72,9 @@ function RunningNumber({
   React.useEffect(() => {
     let startTimestamp: number | null = null;
     let animationFrameId: number;
-    const duration = 1800; // 1.8 seconds smooth roll
+    const duration = 1600; // 1.6 seconds smooth count-up
 
-    // Ease-out cubic for a fast start and smooth deceleration
+    // Ease-out cubic: rapid responsive start and smooth finish
     const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 
     const step = (timestamp: number) => {
@@ -106,29 +106,53 @@ function RunningNumber({
 }
 
 export function AboutStats() {
+  const sectionRef = React.useRef<HTMLElement | null>(null);
   const [triggerKey, setTriggerKey] = React.useState(0);
+
+  // Trigger smooth count-up on initial load and whenever user scrolls section into view
+  React.useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setTriggerKey((k) => k + 1);
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const handleRerun = () => {
     setTriggerKey((k) => k + 1);
   };
 
   return (
-    <section className="relative py-12 sm:py-16 bg-[#160B06] text-white overflow-hidden select-none border-y border-white/5">
-      {/* Ambient Yellow & Green Colored Backlights */}
-      <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-emerald-500/15 blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-20 -right-20 w-80 h-80 rounded-full bg-yellow-500/15 blur-3xl pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-48 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+    <section
+      ref={sectionRef}
+      className="relative py-12 sm:py-16 bg-white text-gray-900 overflow-hidden select-none border-y border-stone-200/60"
+    >
+      {/* Subtle Warm Amber, Emerald & Rose Ambient Highlights */}
+      <div className="absolute -top-24 -left-24 w-80 h-80 rounded-full bg-emerald-100/40 blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-24 -right-24 w-80 h-80 rounded-full bg-orange-100/40 blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-48 bg-rose-100/30 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
-        {/* Subtle Header with Rerun trigger */}
-        <div className="flex items-center justify-between mb-6 pb-2 border-b border-white/10">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-emerald-400">
+        {/* Header with Milestones Badge & Replay Trigger */}
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-6 sm:mb-8 pb-3 border-b border-gray-100">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200/70 text-emerald-700 text-[11px] sm:text-xs font-bold tracking-wide">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               Verified Cafe Milestones
             </span>
-            <span className="text-white/30">•</span>
-            <span className="text-[11px] sm:text-xs font-semibold text-yellow-300">
+            <span className="text-gray-300 hidden sm:inline">•</span>
+            <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-orange-50 border border-orange-200/70 text-[#FF5A0A] text-[11px] sm:text-xs font-semibold">
               Updated Daily
             </span>
           </div>
@@ -136,19 +160,45 @@ export function AboutStats() {
           <button
             type="button"
             onClick={handleRerun}
-            className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-gray-400 hover:text-white transition-colors bg-white/5 hover:bg-white/10 border border-white/10 px-2.5 py-1 rounded-lg cursor-pointer"
-            title="Re-run numbers counter"
+            className="inline-flex items-center gap-1.5 text-[11px] sm:text-xs font-semibold text-gray-600 hover:text-gray-900 transition-colors bg-gray-50 hover:bg-gray-100 border border-gray-200/80 px-3 py-1.5 rounded-xl cursor-pointer shadow-xs active:scale-95 group"
+            title="Replay count animation"
           >
-            <RefreshCw className="w-3 h-3 text-yellow-400 transition-transform active:rotate-180" />
+            <RefreshCw className="w-3.5 h-3.5 text-[#FF5A0A] transition-transform duration-300 group-hover:rotate-180" />
             <span>Replay Numbers</span>
           </button>
         </div>
 
-        {/* 4 Cards Grid with vibrant Yellow & Green accents (2x2 on mobile, 4 in a row on desktop) */}
+        {/* 4 Cards Grid (2x2 on mobile, 4 in a row on desktop) */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {STATS_DATA.map((stat) => {
             const Icon = stat.icon;
-            const isGreen = stat.theme === "green";
+
+            const themeStyles = {
+              green: {
+                cardBorder: "border-emerald-100 hover:border-emerald-300",
+                cardHoverShadow: "hover:shadow-[0_12px_32px_rgba(16,185,129,0.12)]",
+                cardHoverBg: "hover:bg-emerald-50/20",
+                iconBox: "bg-emerald-50 border-emerald-200/80 text-emerald-600 shadow-emerald-500/10",
+                number: "text-emerald-600",
+                dot: "bg-emerald-500",
+              },
+              orange: {
+                cardBorder: "border-orange-100 hover:border-orange-300",
+                cardHoverShadow: "hover:shadow-[0_12px_32px_rgba(255,90,10,0.12)]",
+                cardHoverBg: "hover:bg-orange-50/20",
+                iconBox: "bg-orange-50 border-orange-200/80 text-[#FF5A0A] shadow-orange-500/10",
+                number: "text-[#FF5A0A]",
+                dot: "bg-[#FF5A0A]",
+              },
+              red: {
+                cardBorder: "border-red-100 hover:border-red-300",
+                cardHoverShadow: "hover:shadow-[0_12px_32px_rgba(239,68,68,0.12)]",
+                cardHoverBg: "hover:bg-red-50/20",
+                iconBox: "bg-red-50 border-red-200/80 text-red-600 shadow-red-500/10",
+                number: "text-red-600",
+                dot: "bg-red-500",
+              },
+            }[stat.theme];
 
             return (
               <div
@@ -156,39 +206,27 @@ export function AboutStats() {
                 onClick={handleRerun}
                 onMouseEnter={handleRerun}
                 className={cn(
-                  "relative rounded-2xl sm:rounded-3xl p-4 sm:p-7 border backdrop-blur-md flex flex-col items-center text-center transition-all duration-300 group cursor-pointer sm:cursor-default shadow-lg",
-                  isGreen
-                    ? "bg-gradient-to-b from-[#1C281F]/90 via-[#161F18]/90 to-[#121A14]/90 border-emerald-500/30 hover:border-emerald-400/60 hover:shadow-emerald-500/15"
-                    : "bg-gradient-to-b from-[#282312]/90 via-[#211C0E]/90 to-[#17140A]/90 border-yellow-500/30 hover:border-yellow-400/60 hover:shadow-yellow-500/15"
+                  "relative rounded-2xl sm:rounded-3xl p-4 sm:p-7 border bg-white flex flex-col items-center text-center transition-all duration-300 group cursor-pointer shadow-[0_4px_20px_rgba(0,0,0,0.04)] hover:-translate-y-1",
+                  themeStyles.cardBorder,
+                  themeStyles.cardHoverShadow,
+                  themeStyles.cardHoverBg
                 )}
               >
-                {/* Glow ring */}
-                <div
-                  className={cn(
-                    "absolute inset-0 rounded-2xl sm:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none blur-xl -z-10",
-                    isGreen ? "bg-emerald-500/20" : "bg-yellow-500/20"
-                  )}
-                />
-
                 {/* Top Colored Icon Box */}
                 <div
                   className={cn(
-                    "w-9 h-9 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center mb-2.5 sm:mb-4 border shadow-inner transition-transform duration-300 group-hover:scale-110",
-                    isGreen
-                      ? "bg-emerald-500/20 border-emerald-400/40 text-emerald-300 shadow-emerald-500/20"
-                      : "bg-yellow-500/20 border-yellow-400/40 text-yellow-300 shadow-yellow-500/20"
+                    "w-10 h-10 sm:w-13 sm:h-13 rounded-xl sm:rounded-2xl flex items-center justify-center mb-3 sm:mb-4 border shadow-sm transition-transform duration-300 group-hover:scale-110",
+                    themeStyles.iconBox
                   )}
                 >
-                  <Icon className="w-4 h-4 sm:w-6 sm:h-6 stroke-[2.2]" />
+                  <Icon className="w-5 h-5 sm:w-6 sm:h-6 stroke-[2.2]" />
                 </div>
 
                 {/* Big Running Animated Number */}
                 <div
                   className={cn(
-                    "text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-none font-mono drop-shadow-md",
-                    isGreen
-                      ? "text-transparent bg-clip-text bg-gradient-to-b from-emerald-200 via-emerald-300 to-green-400"
-                      : "text-transparent bg-clip-text bg-gradient-to-b from-yellow-200 via-amber-300 to-yellow-400"
+                    "text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-none font-mono drop-shadow-xs",
+                    themeStyles.number
                   )}
                 >
                   <RunningNumber
@@ -199,18 +237,13 @@ export function AboutStats() {
                   />
                 </div>
 
-                {/* Label in Vibrant Yellow or Green */}
-                <span
-                  className={cn(
-                    "text-[11px] sm:text-sm font-extrabold mt-2 sm:mt-2.5 tracking-wide",
-                    isGreen ? "text-emerald-300" : "text-yellow-300"
-                  )}
-                >
+                {/* Label */}
+                <span className="text-xs sm:text-sm font-bold text-gray-900 mt-2.5 sm:mt-3 tracking-tight">
                   {stat.label}
                 </span>
 
                 {/* Subtext */}
-                <span className="text-[10px] sm:text-[11px] text-gray-400 mt-0.5 sm:mt-1 font-medium line-clamp-1 sm:line-clamp-none">
+                <span className="text-[10px] sm:text-xs text-gray-500 mt-0.5 sm:mt-1 font-medium line-clamp-1 sm:line-clamp-none">
                   {stat.subtext}
                 </span>
               </div>

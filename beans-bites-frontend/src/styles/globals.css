@@ -24,11 +24,6 @@
   }
 }
 
-/* Custom typography & creator font */
-.font-jakarta {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-}
-
 /* Custom scrollbar hiding utility */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
