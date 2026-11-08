@@ -1,7 +1,7 @@
 import * as React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Heart, ExternalLink } from "lucide-react";
 import { ASSETS } from "@/lib/assets";
 
 export function CustomerFooter() {
@@ -213,21 +213,27 @@ export function CustomerFooter() {
         </div>
 
         {/* Bottom Bar: Copyright & Om Prakash Sharma Attribution */}
-        <div className="pt-3 sm:pt-6 flex flex-col sm:flex-row items-center justify-between gap-1.5 sm:gap-2.5 text-xs text-gray-400 text-center sm:text-left">
+        <div className="pt-3 sm:pt-6 flex flex-col sm:flex-row items-center justify-between gap-2.5 sm:gap-4 text-xs text-gray-400 text-center sm:text-left">
           <p className="text-[11px] sm:text-xs">
-            © {new Date().getFullYear()} Beans & Bites Café & Restaurant. All rights reserved.
+            © {new Date().getFullYear()}{" "}
+            <span className="text-gray-300 font-medium">Beans & Bites</span> Café & Restaurant. All rights reserved.
           </p>
-          <p className="text-[11px] sm:text-xs flex items-center gap-1.5">
-            <span>Created by</span>
+          <div className="flex items-center gap-1.5 text-[11px] sm:text-xs text-gray-400">
+            <span>Crafted with</span>
+            <Heart className="w-3.5 h-3.5 text-[#FF5A0A] fill-[#FF5A0A] animate-pulse inline-block" />
+            <span>by</span>
             <a
               href="https://www.omprakashsharma.info.np/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#FF7A24] hover:text-[#FFA366] font-semibold underline underline-offset-4 transition-colors"
+              className="group inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.07] hover:bg-white/[0.13] border border-white/15 hover:border-[#FF5A0A]/50 transition-all duration-200 active:scale-95 shadow-xs"
             >
-              Om Prakash Sharma
+              <span className="font-jakarta font-semibold tracking-wide text-white group-hover:text-[#FFA366] transition-colors">
+                Om Prakash Sharma
+              </span>
+              <ExternalLink className="w-3 h-3 text-[#FF7A24] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
-          </p>
+          </div>
         </div>
       </div>
     </footer>
