@@ -58,6 +58,28 @@
   animation-play-state: paused;
 }
 
+/* Slow Gentle Menu Category Scroller (bistarai) */
+@keyframes menu-category-glide {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-menu-category-glide {
+  display: flex;
+  width: max-content;
+  animation: menu-category-glide 32s linear infinite;
+  will-change: transform;
+}
+
+.animate-menu-category-glide:hover,
+.animate-menu-category-glide:active {
+  animation-play-state: paused;
+}
+
 /* =========================================================
    Celebration & Success SVG Keyframe Animations
    ========================================================= */
