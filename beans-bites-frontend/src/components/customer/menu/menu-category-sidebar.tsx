@@ -14,15 +14,16 @@ interface MenuCategorySidebarProps {
 // Visual icons corresponding to categories
 const CATEGORY_ICONS: Record<string, { emoji: string; isGrid?: boolean }> = {
   all: { emoji: "▦", isGrid: true },
+  nepali: { emoji: "🍛" },
+  momo: { emoji: "🥟" },
+  beverages: { emoji: "☕" },
   pizza: { emoji: "🍕" },
   burger: { emoji: "🍔" },
   pasta: { emoji: "🍝" },
-  momo: { emoji: "🥟" },
   sandwich: { emoji: "🥪" },
   salad: { emoji: "🥗" },
   snacks: { emoji: "🍟" },
   desserts: { emoji: "🍰" },
-  beverages: { emoji: "☕" },
 };
 
 function CategoryPill({

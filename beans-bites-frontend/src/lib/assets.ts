@@ -23,6 +23,16 @@ export const ASSETS = {
     },
     momo: {
       chicken: "/assets/food/momo/chicken-momo.webp",
+      buff: "/assets/food/momo/buff-momo.webp",
+      jhol: "/assets/food/momo/jhol-momo.webp",
+      kothey: "/assets/food/momo/kothey-momo.webp",
+    },
+    nepali: {
+      thakaliVeg: "/assets/food/nepali/thakali-veg.webp",
+      thakaliChicken: "/assets/food/nepali/thakali-chicken.webp",
+      thakaliMutton: "/assets/food/nepali/thakali-mutton.webp",
+      chickenChoila: "/assets/food/nepali/chicken-choila.webp",
+      samayBaji: "/assets/food/nepali/samay-baji.webp",
     },
     pasta: {
       alfredo: "/assets/food/pasta/pasta-alfredo.webp",
@@ -38,6 +48,13 @@ export const ASSETS = {
     },
     beverages: {
       icedLatte: "/assets/food/beverages/iced-latte.webp",
+      masalaChiya: "/assets/food/beverages/masala-chiya.webp",
+      greenTea: "/assets/food/beverages/green-tea.webp",
+      espresso: "/assets/food/beverages/espresso.webp",
+      americano: "/assets/food/beverages/americano.webp",
+      coldBrew: "/assets/food/beverages/cold-brew.webp",
+      mintLemonade: "/assets/food/beverages/mint-lemonade.webp",
+      mangoLassi: "/assets/food/beverages/mango-lassi.webp",
     },
   },
   menu: {
@@ -45,15 +62,16 @@ export const ASSETS = {
   },
   categories: {
     all: "/assets/categories/all.webp",
+    nepali: "/assets/food/nepali/thakali-veg.webp",
+    momo: "/assets/categories/momo.webp",
+    beverages: "/assets/categories/beverages.webp",
     pizza: "/assets/categories/pizza.webp",
     burger: "/assets/categories/burger.webp",
     pasta: "/assets/categories/pasta.webp",
-    momo: "/assets/categories/momo.webp",
     sandwich: "/assets/categories/sandwich.webp",
     salad: "/assets/categories/salad.webp",
     snacks: "/assets/categories/snacks.webp",
     desserts: "/assets/categories/desserts.webp",
-    beverages: "/assets/categories/beverages.webp",
   },
   promotions: {
     weekendSpecial: "/assets/promotions/weekend-special.webp",
