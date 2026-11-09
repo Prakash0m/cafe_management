@@ -63,9 +63,9 @@ export function FoodCard({ item }: FoodCardProps) {
   };
 
   return (
-    <div className="group relative bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between">
+    <div className="group relative bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_20px_rgba(0,0,0,0.08)] sm:hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between h-full">
       {/* Top Media Container */}
-      <div className="relative w-full h-32 sm:h-48 overflow-hidden bg-gray-100">
+      <div className="relative w-full h-32 sm:h-48 overflow-hidden bg-gray-100 flex-shrink-0">
         <Image
           src={item.imageUrl}
           alt={item.name}
@@ -109,7 +109,7 @@ export function FoodCard({ item }: FoodCardProps) {
       </div>
 
       {/* Card Content & Details */}
-      <div className="p-2.5 sm:p-4 flex flex-col flex-1 justify-between gap-2">
+      <div className="p-2 sm:p-4 flex flex-col flex-1 justify-between gap-1.5 sm:gap-2">
         <div>
           <h3 className="font-bold text-[#111827] text-xs sm:text-[15px] group-hover:text-[#FF5A0A] transition-colors leading-snug line-clamp-1">
             {item.name}
@@ -120,7 +120,7 @@ export function FoodCard({ item }: FoodCardProps) {
 
           {/* Sano Sano Ingredients */}
           {item.ingredients && item.ingredients.length > 0 && (
-            <div className="mt-1.5 flex items-center gap-1 text-[10px] text-gray-500 flex-wrap">
+            <div className="mt-1 sm:mt-1.5 flex items-center gap-1 text-[10px] text-gray-500 flex-wrap">
               <span className="text-[9px] uppercase font-semibold text-gray-400">
                 With:
               </span>
@@ -132,51 +132,50 @@ export function FoodCard({ item }: FoodCardProps) {
           )}
         </div>
 
-        {/* Bottom Row: Price & Multi-Person Stepper + Add Button */}
-        <div className="mt-1 sm:mt-2 pt-2 border-t border-gray-50 flex items-center justify-between gap-1.5 flex-wrap">
-          <div className="flex flex-col">
-            <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider text-[9px] sm:text-[10px] leading-none">
+        {/* Bottom Row: Price & Multi-Person Stepper + Add Button (stable, flex-nowrap, zero jump) */}
+        <div className="mt-1 sm:mt-2 pt-2 border-t border-gray-100 flex items-center justify-between gap-1 sm:gap-2 flex-nowrap min-h-[30px] sm:min-h-[34px]">
+          <div className="flex flex-col min-w-0 flex-shrink-0">
+            <span className="font-semibold text-gray-400 uppercase tracking-wider text-[8.5px] sm:text-[10px] leading-none">
               Price
             </span>
-            <span className="text-xs sm:text-base font-extrabold text-[#FF5A0A] leading-tight font-mono mt-0.5">
+            <span className="text-[11px] sm:text-base font-extrabold text-[#FF5A0A] leading-tight font-mono mt-0.5 truncate">
               {formatPrice(item.price)}
             </span>
           </div>
 
-          <div className="flex items-center gap-1 sm:gap-1.5">
+          <div className="flex items-center gap-1 sm:gap-1.5 flex-shrink-0">
             {/* Stepper ([-] qty [+]) */}
-            <div className="flex items-center border border-gray-200 rounded-md bg-gray-50 h-6 sm:h-7 px-0.5">
+            <div className="flex items-center border border-gray-200 rounded-md bg-gray-50 h-6 sm:h-7 px-0.5 shadow-2xs">
               <button
                 type="button"
                 onClick={handleDecrement}
                 disabled={quantity <= 1}
-                className="w-4 h-full flex items-center justify-center text-gray-500 hover:text-[#FF5A0A] disabled:opacity-30"
+                aria-label="Decrease quantity"
+                className="w-3.5 sm:w-4 h-full flex items-center justify-center text-gray-500 hover:text-[#FF5A0A] disabled:opacity-30 cursor-pointer transition-colors"
               >
                 <Minus className="w-2.5 h-2.5" />
               </button>
-              <span className="w-4 text-center text-[11px] sm:text-xs font-bold text-gray-800 select-none">
+              <span className="w-3.5 sm:w-4 text-center text-[10.5px] sm:text-xs font-bold text-gray-800 select-none tabular-nums">
                 {quantity}
               </span>
               <button
                 type="button"
                 onClick={handleIncrement}
-                className="w-4 h-full flex items-center justify-center text-gray-500 hover:text-[#FF5A0A]"
+                aria-label="Increase quantity"
+                className="w-3.5 sm:w-4 h-full flex items-center justify-center text-gray-500 hover:text-[#FF5A0A] cursor-pointer transition-colors"
               >
                 <Plus className="w-2.5 h-2.5" />
               </button>
             </div>
 
-            {/* Add Button - only adds when clicked! */}
+            {/* Add Button - stable fixed size, never causes layout shift */}
             <button
+              type="button"
               onClick={handleAddClick}
-              className="inline-flex items-center gap-1 bg-[#FF5A0A] hover:bg-[#E04E07] active:bg-[#C94304] text-white text-[11px] sm:text-xs font-bold px-2 sm:px-3 h-6 sm:h-7 rounded-md shadow-2xs hover:shadow transition-all active:scale-95 cursor-pointer"
+              aria-label={quantity > 1 ? `Add ${quantity} to cart` : "Add to cart"}
+              className="inline-flex items-center justify-center bg-[#FF5A0A] hover:bg-[#E04E07] active:bg-[#C94304] text-white text-[11px] sm:text-xs font-bold px-2 sm:px-3 h-6 sm:h-7 rounded-md shadow-2xs hover:shadow transition-colors active:scale-95 cursor-pointer flex-shrink-0"
             >
               <span>Add</span>
-              {quantity > 1 && (
-                <span className="bg-white/20 text-white text-[10px] px-1 rounded font-extrabold">
-                  {quantity}
-                </span>
-              )}
             </button>
           </div>
         </div>
